@@ -1,4 +1,4 @@
-/*
+/**
  * Express middleware for an API service.
  *
  * @param {object} req - Represents the HTTP request making a request to the API service. Has
