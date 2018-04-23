@@ -14,8 +14,9 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "yarn test:mocha",
+    "test": "run-s test:mocha test:eslint",
     "test:mocha": "mocha --exit --require test/utils/setup-babel-register --recursive test/unit",
+    "test:eslint": "eslint --max-warnings 0 --cache --ext .js,.jsx,.spec.js,.spec.jsx src/* test/*",
     "start:dev:svr": "babel-node src/server/server"
   },
   "prettier": {
@@ -43,6 +44,7 @@
     "eslint-plugin-react": "^7.7.0",
     "mocha": "^5.1.1",
     "prettier": "^1.12.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "yarn-run-all": "^3.1.1"
   }
 }
