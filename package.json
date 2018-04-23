@@ -1,0 +1,28 @@
+{
+  "name": "honey-badger-insights",
+  "version": "1.0.0",
+  "description": "Simple service that provides insights into honeypot activity",
+  "homepage": "https://github.com/Giners/honey-badger-insights#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giners/honey-badger-insights.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Giners/honey-badger-insights/issues"
+  },
+  "author": "Chris Austin <caustin.adwan@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev:svr": "babel-node src/server/server"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/node": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46"
+  }
+}
