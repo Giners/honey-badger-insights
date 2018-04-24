@@ -1,0 +1,14 @@
+{
+  "source": "./src",
+  "destination": "./docs",
+  "includes": ["\\.js$", "\\.jsx$"],
+  "plugins": [
+    { "name": "esdoc-standard-plugin" },
+    {
+      "name": "esdoc-ecmascript-proposal-plugin",
+      "option": { "objectRestSpread": true }
+    },
+    { "name": "esdoc-jsx-plugin" },
+    { "name": "esdoc-react-plugin" }
+  ]
+}
