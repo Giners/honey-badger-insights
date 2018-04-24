@@ -20,7 +20,7 @@ const honeyDBAPIAuthIDHeader = 'X-HoneyDb-ApiId'
 const honeyDBAPIAuthKeyHeader = 'X-HoneyDb-ApiKey'
 
 /** Used to limit how much data (honey badgers) we ultimately return */
-export const maxHoneyDBDatums = 100
+const maxHoneyDBDatums = 100
 
 /**
  * The entry point into our graph of relationships between types we define. You can read this as:

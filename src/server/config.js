@@ -1,3 +1,9 @@
+/**
+ * Config object that contains information/details to allow the app to function properly.
+ * Information/details are gathered from environment variables. If the appropriate environment
+ * variable isn't set then a default value is used. Note that some default values will cause the app
+ * to no function properly, such as defaults for credentials for services that are used.
+ */
 const config = {
   // Config for the app/server
   app: {
