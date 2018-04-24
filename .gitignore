@@ -9,5 +9,8 @@ node_modules/
 # yarn start:doc
 docs/
 
+##### Built assets/artifacts/libraries #####
+lib/
+
 ##### ESLint #####
 .eslintcache
