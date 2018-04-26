@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   // Entry point for our application. This is where webpack will start tracking dependencies
@@ -46,6 +47,17 @@ module.exports = {
     // This is what allows us to leave off the extension when using the 'import' statement.
     extensions: ['.js', '.jsx'],
   },
+  // Plugins allow for the webpack build process to be customized
+  //
+  // List of plugins that we use:
+  // * DefinePlugin
+  //   Allows you to create global constants which can be configured at compile time.
+  //   See: https://webpack.js.org/plugins/define-plugin/#src/components/Sidebar/Sidebar.jsx
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HOST_URL': JSON.stringify(process.env.HOST_URL),
+    }),
+  ],
   // Webpack has a dev server that can be used to develop applications quickly. For example it can
   // serve your bundled assets as well as watch for changes, recompile your changes, and hot load
   // them. These options are picked up by the webpack dev server and change the way it behaves
