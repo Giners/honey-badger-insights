@@ -11,6 +11,7 @@ docs/
 
 ##### Built assets/artifacts/libraries #####
 lib/
+public/bundle.js
 
 ##### ESLint #####
 .eslintcache
