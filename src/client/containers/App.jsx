@@ -1,8 +1,11 @@
-import React from 'react'
+import 'isomorphic-fetch'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
+
+import React from 'react'
+import List, { ListItem, ListItemText } from 'material-ui/List'
 
 import config from './../../server/config'
 
@@ -15,11 +18,14 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
+/** The initial state of the App component when it is mounted. Exported for testing purposes. */
+export const initialState = { honeyBadgers: [], error: null }
+
 class App extends React.Component {
   constructor() {
     super()
 
-    this.state = { honeyBadgers: [], error: null }
+    this.state = initialState
   }
 
   componentDidMount() {
@@ -53,11 +59,13 @@ class App extends React.Component {
     }
 
     return (
-      <ul>
-        {honeyBadgers.map(({ ipAddress }) => (
-          <li key={ipAddress}>{ipAddress}</li>
+      <List>
+        {honeyBadgers.map(({ ipAddress = 'IP address missing' } = {}) => (
+          <ListItem key={ipAddress}>
+            <ListItemText primary={ipAddress} />
+          </ListItem>
         ))}
-      </ul>
+      </List>
     )
   }
 }

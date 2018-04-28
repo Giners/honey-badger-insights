@@ -55,7 +55,7 @@ describe('HoneyBadgerApp service test: apiService', function() {
     // ('honeyBadgers') to verify that our API endpoint is setup and serving requests yet
     // unfortunately it takes a while as its communicating with HoneyDB. If we implement a query in
     // the future that doesn't take as long then we can remove this timeout.
-    this.timeout(10000)
+    this.timeout(15000)
 
     const client = new ApolloClient({
       // Always use localhost when running the unit tests as the test server runs, well, locally
