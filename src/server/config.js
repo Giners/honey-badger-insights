@@ -7,7 +7,12 @@
 const config = {
   // Config for the app/server
   app: {
+    hostURL: process.env.HOST_URL || 'http://localhost',
     port: process.env.port || 3000,
+  },
+  // The URIs of our services
+  serviceURIs: {
+    graphQL: '/graphql',
   },
   // Service credentials
   serviceCreds: {

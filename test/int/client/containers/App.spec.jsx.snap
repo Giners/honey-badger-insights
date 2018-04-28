@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React component test: <App> Renders correctly for given application state: Honey badgers after querying the GraphQL API endpoint 1`] = `
+<App>
+  <WithStyles(List)>
+    <List
+      classes={
+        Object {
+          "dense": "MuiList-dense-3",
+          "padding": "MuiList-padding-2",
+          "root": "MuiList-root-1",
+          "subheader": "MuiList-subheader-4",
+        }
+      }
+      component="ul"
+      dense={false}
+      disablePadding={false}
+    >
+      <ul
+        className="MuiList-root-1 MuiList-padding-2"
+      >
+        <WithStyles(ListItem)
+          key="1.1.1.1"
+        >
+          <ListItem
+            ContainerComponent="li"
+            button={false}
+            classes={
+              Object {
+                "button": "MuiListItem-button-13",
+                "container": "MuiListItem-container-6",
+                "default": "MuiListItem-default-8",
+                "dense": "MuiListItem-dense-9",
+                "disabled": "MuiListItem-disabled-10",
+                "divider": "MuiListItem-divider-11",
+                "focusVisible": "MuiListItem-focusVisible-7",
+                "gutters": "MuiListItem-gutters-12",
+                "root": "MuiListItem-root-5",
+                "secondaryAction": "MuiListItem-secondaryAction-14",
+              }
+            }
+            dense={false}
+            disableGutters={false}
+            disabled={false}
+            divider={false}
+          >
+            <li
+              className="MuiListItem-root-5 MuiListItem-default-8 MuiListItem-gutters-12"
+              disabled={false}
+            >
+              <WithStyles(ListItemText)
+                key=".0"
+                primary="1.1.1.1"
+              >
+                <ListItemText
+                  classes={
+                    Object {
+                      "dense": "MuiListItemText-dense-17",
+                      "inset": "MuiListItemText-inset-16",
+                      "primary": "MuiListItemText-primary-18",
+                      "root": "MuiListItemText-root-15",
+                      "secondary": "MuiListItemText-secondary-19",
+                      "textDense": "MuiListItemText-textDense-20",
+                    }
+                  }
+                  disableTypography={false}
+                  inset={false}
+                  primary="1.1.1.1"
+                >
+                  <div
+                    className="MuiListItemText-root-15"
+                  >
+                    <WithStyles(Typography)
+                      className="MuiListItemText-primary-18"
+                      variant="subheading"
+                    >
+                      <Typography
+                        align="inherit"
+                        className="MuiListItemText-primary-18"
+                        classes={
+                          Object {
+                            "alignCenter": "MuiTypography-alignCenter-34",
+                            "alignJustify": "MuiTypography-alignJustify-36",
+                            "alignLeft": "MuiTypography-alignLeft-33",
+                            "alignRight": "MuiTypography-alignRight-35",
+                            "body1": "MuiTypography-body1-30",
+                            "body2": "MuiTypography-body2-29",
+                            "button": "MuiTypography-button-32",
+                            "caption": "MuiTypography-caption-31",
+                            "colorError": "MuiTypography-colorError-44",
+                            "colorInherit": "MuiTypography-colorInherit-40",
+                            "colorPrimary": "MuiTypography-colorPrimary-41",
+                            "colorSecondary": "MuiTypography-colorSecondary-42",
+                            "colorTextSecondary": "MuiTypography-colorTextSecondary-43",
+                            "display1": "MuiTypography-display1-25",
+                            "display2": "MuiTypography-display2-24",
+                            "display3": "MuiTypography-display3-23",
+                            "display4": "MuiTypography-display4-22",
+                            "gutterBottom": "MuiTypography-gutterBottom-38",
+                            "headline": "MuiTypography-headline-26",
+                            "noWrap": "MuiTypography-noWrap-37",
+                            "paragraph": "MuiTypography-paragraph-39",
+                            "root": "MuiTypography-root-21",
+                            "subheading": "MuiTypography-subheading-28",
+                            "title": "MuiTypography-title-27",
+                          }
+                        }
+                        color="default"
+                        gutterBottom={false}
+                        headlineMapping={
+                          Object {
+                            "body1": "p",
+                            "body2": "aside",
+                            "display1": "h1",
+                            "display2": "h1",
+                            "display3": "h1",
+                            "display4": "h1",
+                            "headline": "h1",
+                            "subheading": "h3",
+                            "title": "h2",
+                          }
+                        }
+                        noWrap={false}
+                        paragraph={false}
+                        variant="subheading"
+                      >
+                        <h3
+                          className="MuiTypography-root-21 MuiTypography-subheading-28 MuiListItemText-primary-18"
+                        >
+                          1.1.1.1
+                        </h3>
+                      </Typography>
+                    </WithStyles(Typography)>
+                  </div>
+                </ListItemText>
+              </WithStyles(ListItemText)>
+            </li>
+          </ListItem>
+        </WithStyles(ListItem)>
+      </ul>
+    </List>
+  </WithStyles(List)>
+</App>
+`;

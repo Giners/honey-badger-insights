@@ -90,7 +90,7 @@ describe('Schema query tests:', function() {
 
     it('Query returns honey badgers', async function() {
       // Increase the timeout in our unit test as our schema makes async calls to HoneyDB
-      this.timeout(5000)
+      this.timeout(15000)
 
       const result = await graphql(schema, query)
 
@@ -99,7 +99,7 @@ describe('Schema query tests:', function() {
 
     it('Query returns at most 100 honey badgers', async function() {
       // Increase the timeout in our unit test as our schema makes async calls to HoneyDB
-      this.timeout(5000)
+      this.timeout(15000)
 
       const result = await graphql(schema, query)
 

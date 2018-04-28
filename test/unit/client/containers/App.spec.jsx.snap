@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React component test: <App> Renders correctly for given application state: Error (state contains empty list of honey badgers) 1`] = `"The following error occurred: Bananas LOL"`;
+
+exports[`React component test: <App> Renders correctly for given application state: Error (state contains non-empty list of honey badgers) 1`] = `"The following error occurred: Bananas LOL"`;
+
+exports[`React component test: <App> Renders correctly for given application state: Honey badgers (state contains non-empty list of honey badgers) 1`] = `
+<WithStyles(List)>
+  <WithStyles(ListItem)
+    key="IP address missing"
+  >
+    <WithStyles(ListItemText)
+      primary="IP address missing"
+    />
+  </WithStyles(ListItem)>
+</WithStyles(List)>
+`;
+
+exports[`React component test: <App> Renders correctly for given application state: Honey badgers are rendered (non-empty list of honey badgers) 1`] = `
+<WithStyles(List)>
+  <WithStyles(ListItem)
+    key="IP address missing"
+  >
+    <WithStyles(ListItemText)
+      primary="IP address missing"
+    />
+  </WithStyles(ListItem)>
+</WithStyles(List)>
+`;
+
+exports[`React component test: <App> Renders correctly for given application state: Initial state 1`] = `<WithStyles(List) />`;
+
+exports[`React component test: <App> Renders correctly for given application state: Renders errors (with empty list of honey badgers) 1`] = `"The following error occurred: Bananas LOL"`;
+
+exports[`React component test: <App> Renders correctly for given application state: Renders errors (with non-empty list of honey badgers) 1`] = `"The following error occurred: Bananas LOL"`;
+
+exports[`React component test: <App> Renders correctly for given application state: Renders errors and not honey badgers 1`] = `"The following error occurred: Bananas LOL"`;
