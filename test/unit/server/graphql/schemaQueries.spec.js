@@ -68,33 +68,34 @@ describe('Schema query tests:', function() {
     ).to.equal(expectedSchemaQueries)
   })
 
-  describe('Query: honeyBadgers', function() {
+  describe('Query: topHoneyBadgers', function() {
     const query = `
       {
-        honeyBadgers {
+        topHoneyBadgers {
           ipAddress
+          count
         }
       }
     `
 
     // Helper method to perform common basic validation on the 'honeyBadgers' query. Ought to be
     // invoked before more specific validation is done on the 'honeyBadgers' query.
-    const validateHoneyBadgersQuery = result => {
+    const validateTopHoneyBadgersQuery = result => {
       expect(
         result.errors,
         `Didn't expect any errors but got: ${result.errors}`,
       ).to.be.undefined
       expect(result.data).to.exist
-      expect(result.data.honeyBadgers).to.exist
+      expect(result.data.topHoneyBadgers).to.exist
     }
 
-    it('Query returns honey badgers', async function() {
+    it('Query returns the top honey badgers details', async function() {
       // Increase the timeout in our unit test as our schema makes async calls to HoneyDB
       this.timeout(15000)
 
       const result = await graphql(schema, query)
 
-      validateHoneyBadgersQuery(result)
+      validateTopHoneyBadgersQuery(result)
     })
 
     it('Query returns at most 100 honey badgers', async function() {
@@ -103,10 +104,10 @@ describe('Schema query tests:', function() {
 
       const result = await graphql(schema, query)
 
-      validateHoneyBadgersQuery(result)
+      validateTopHoneyBadgersQuery(result)
 
-      // At most the 'honeyBadgers' query will return 100 entries
-      expect(result.data.honeyBadgers.length).to.be.at.most(100)
+      // At most the 'topHoneyBadgers' query will return 100 entries
+      expect(result.data.topHoneyBadgers.length).to.be.at.most(100)
     })
   })
 })

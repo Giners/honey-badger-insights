@@ -7,7 +7,7 @@ import {
   GraphQLSchema,
 } from 'graphql'
 
-import HoneyBadgerType from './types'
+import TopHoneyBadgerType from './types'
 import config from './../config'
 
 /** The URL for the HoneyDB API that returns a list of bad hosts from the last 24 hours */
@@ -31,9 +31,9 @@ const maxHoneyDBDatums = 100
 const rootQueryType = new GraphQLObjectType({
   name: 'RootQuery',
   fields: {
-    honeyBadgers: {
+    topHoneyBadgers: {
       type: new GraphQLNonNull(
-        new GraphQLList(new GraphQLNonNull(HoneyBadgerType)),
+        new GraphQLList(new GraphQLNonNull(TopHoneyBadgerType)),
       ),
       resolve() {
         const { id, key } = config.serviceCreds.honeyDB
@@ -61,8 +61,9 @@ const rootQueryType = new GraphQLObjectType({
             // Disable the ESLint error 'camelcase' as HoneyDB returns the data with underscores in
             // the datas identifiers
             // eslint-disable-next-line camelcase
-            honeyBadgers = honeyBadgers.map(({ remote_host }) => ({
+            honeyBadgers = honeyBadgers.map(({ remote_host, count }) => ({
               ipAddress: remote_host,
+              count,
             }))
 
             return honeyBadgers

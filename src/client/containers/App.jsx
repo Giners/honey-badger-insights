@@ -33,14 +33,15 @@ class App extends React.Component {
       .query({
         query: gql`
           {
-            honeyBadgers {
+            topHoneyBadgers {
               ipAddress
+              count
             }
           }
         `,
       })
       .then(res => {
-        const { honeyBadgers } = res.data
+        const honeyBadgers = res.data.topHoneyBadgers
 
         // If we successfully got a request from our GraphQL API endpoint, presume that any previous
         // errors aren't relevant anymore

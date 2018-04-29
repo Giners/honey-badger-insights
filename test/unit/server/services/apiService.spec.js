@@ -66,7 +66,7 @@ describe('HoneyBadgerApp service test: apiService', function() {
     return client.query({
       query: gql`
         {
-          honeyBadgers {
+          topHoneyBadgers {
             ipAddress
           }
         }
