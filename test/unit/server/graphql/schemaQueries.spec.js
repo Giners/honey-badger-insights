@@ -98,7 +98,7 @@ describe('Schema query tests:', function() {
       validateTopHoneyBadgersQuery(result)
     })
 
-    it('Query returns at most 100 honey badgers', async function() {
+    it('Query returns at most 25 honey badgers', async function() {
       // Increase the timeout in our unit test as our schema makes async calls to HoneyDB
       this.timeout(15000)
 
@@ -106,8 +106,8 @@ describe('Schema query tests:', function() {
 
       validateTopHoneyBadgersQuery(result)
 
-      // At most the 'topHoneyBadgers' query will return 100 entries
-      expect(result.data.topHoneyBadgers.length).to.be.at.most(100)
+      // At most the 'topHoneyBadgers' query will return 25 entries
+      expect(result.data.topHoneyBadgers.length).to.be.at.most(25)
     })
   })
 })

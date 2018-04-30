@@ -19,8 +19,11 @@ const honeyDBAPIAuthIDHeader = 'X-HoneyDb-ApiId'
 /** HoneyDB auth header for accessing its APIs that verifies who is accessing the API */
 const honeyDBAPIAuthKeyHeader = 'X-HoneyDb-ApiKey'
 
-/** Used to limit how much data (honey badgers) we ultimately return */
-const maxHoneyDBDatums = 100
+/**
+ * Used to limit how much data (honey badgers) we ultimately return. Can be increased but will end
+ * up consuming a lot more "hits"/resources in regards to the limits that the APIs offer.
+ */
+const maxHoneyDBDatums = 25
 
 /**
  * The entry point into our graph of relationships between types we define. You can read this as:
