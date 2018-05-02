@@ -5,6 +5,7 @@ module.exports = {
   // Entry point for our application. This is where webpack will start tracking dependencies
   // between modules
   entry: [
+    '@babel/polyfill',
     'webpack-dev-server/client?http://0.0.0.0:8080',
     './src/client/containers/Root.jsx',
   ],

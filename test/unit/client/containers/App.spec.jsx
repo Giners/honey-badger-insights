@@ -9,10 +9,12 @@ import toJson from 'enzyme-to-json'
 
 // General 3rd-party supporting libs
 import React from 'react'
-import List, { ListItem, ListItemText } from 'material-ui/List'
 
 // App React component under test
 import App, { initialState } from './../../../../src/client/containers/App'
+
+// Supporting app code
+import HoneyBadgersTable from './../../../../src/client/components/HoneyBadgersTable'
 
 // Configure Chai to work with Jest
 chai.use(chaiJestSnapshot)
@@ -28,7 +30,7 @@ describe('React component test: <App>', function() {
 
   describe('Renders correctly for given application state:', function() {
     // Reference to an Enzyme shallow wrapper around our <App> component that can be used throughout
-    // the following tests
+    // the following tests. Ought to be set before each test is ran.
     let appWrapper = null
 
     beforeEach('Setup Enzyme wrapper', function() {
@@ -38,13 +40,11 @@ describe('React component test: <App>', function() {
       expect(appWrapper.exists()).to.be.true
     })
 
-    it('Initial state', function() {
+    it('Initial props/state', function() {
+      // Even though the props/state gets set initially in our 'before' hooks we explicitly set it
+      // here to be clear of the props/state that we expect to test
       expect(appWrapper.state()).to.equal(initialState)
-
-      // We expect a list to be rendered without any elements in it since we shouldn't have any
-      // honey badgers when we first mount
-      expect(appWrapper.find(List).exists()).to.be.true
-      expect(appWrapper.find(ListItem).exists()).to.be.false
+      expect(appWrapper.find(HoneyBadgersTable).exists()).to.be.true
 
       expect(toJson(appWrapper)).to.matchSnapshot()
     })
@@ -72,10 +72,7 @@ describe('React component test: <App>', function() {
 
     it('Honey badgers (state contains non-empty list of honey badgers)', function() {
       appWrapper.setState({ honeyBadgers: [{}] })
-
-      // We expect a list to be rendered with elements if we have any honey badgers to render
-      expect(appWrapper.find(List).exists()).to.be.true
-      expect(appWrapper.find(ListItemText).exists()).to.be.true
+      expect(appWrapper.find(HoneyBadgersTable).exists()).to.be.true
 
       expect(toJson(appWrapper)).to.matchSnapshot()
     })

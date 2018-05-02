@@ -1,14 +1,49 @@
+import { promisify } from 'util'
+import { readFile } from 'fs'
+import { resolve } from 'path'
+
 import 'isomorphic-fetch'
 
 import {
   GraphQLList,
+  GraphQLString,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
 } from 'graphql'
 
-import HoneyBadgerType from './types'
+import { ASType, TopHoneyBadgerType } from './types'
 import config from './../config'
+
+/**
+ * The URL for the Apility API that returns the autonomous system info for a set of IPs. The API
+ * expects the set of IPs as a list of comma separated IPs used as the last URI segment of this
+ * URL (i.e. you need to add them).
+ *
+ * Note that the URL doesn't contain an ending '/' character. You need to add it before adding the
+ * set of IPs as a list that is comma separated.
+ */
+const apilityASBatchAPIURL = 'https://api.apility.net/as_batch/ip'
+
+/**
+ * Apility auth header for accessing its APIs that identifies who is accessing the API based on a
+ * token provided in the Apility dashboard
+ */
+const apilityAPIAuthTokenHeader = 'X-Auth-Token'
+
+/**
+ * Helper method to construct the URL used to query for the autonomous systems associated with a set
+ * of IPs from Apility.
+ *
+ * @param {string[]} ipAddresses - Array of IP addresses to query for the autonomous system
+ * associated with them. No checking/validation is done of this parameter so if anything but an
+ * array of strings is passed will cause this function to break.
+ *
+ * @returns {string} - Formed URL that can be used to query for the autonomous systems associated
+ * with a set of IPs from Apility
+ */
+const getApilityASBatchAPIURL = ipAddresses =>
+  `${apilityASBatchAPIURL}/${ipAddresses.join(',')}`
 
 /** The URL for the HoneyDB API that returns a list of bad hosts from the last 24 hours */
 const honeyDBBadHostsAPIURL = 'https://riskdiscovery.com/honeydb/api/bad-hosts'
@@ -19,8 +54,18 @@ const honeyDBAPIAuthIDHeader = 'X-HoneyDb-ApiId'
 /** HoneyDB auth header for accessing its APIs that verifies who is accessing the API */
 const honeyDBAPIAuthKeyHeader = 'X-HoneyDb-ApiKey'
 
-/** Used to limit how much data (honey badgers) we ultimately return */
-const maxHoneyDBDatums = 100
+/**
+ * Used to limit how much data (honey badgers) we ultimately return. Can be increased but will end
+ * up consuming a lot more "hits"/resources in regards to the limits that the APIs offer.
+ */
+const maxHoneyDBDatums = 25
+
+/**
+ * If 'true' the mock data will be read from disk and passed as the response to the GraphQL queries
+ * and mutations. This is only meant to be used for testing purposes. Useful for unit testing to
+ * reduce the consumption of API resources/limits for services we integrate with.
+ */
+const { returnMockData } = config.app
 
 /**
  * The entry point into our graph of relationships between types we define. You can read this as:
@@ -31,11 +76,19 @@ const maxHoneyDBDatums = 100
 const rootQueryType = new GraphQLObjectType({
   name: 'RootQuery',
   fields: {
-    honeyBadgers: {
+    topHoneyBadgers: {
       type: new GraphQLNonNull(
-        new GraphQLList(new GraphQLNonNull(HoneyBadgerType)),
+        new GraphQLList(new GraphQLNonNull(TopHoneyBadgerType)),
       ),
       resolve() {
+        // Return mock data from disk if signalled to do so
+        if (returnMockData) {
+          return promisify(readFile)(
+            resolve(__dirname, './data/topHoneyBadgersData'),
+          ).then(data => JSON.parse(data))
+        }
+
+        // If we aren't returning returning mock data from disk then query the HoneyDB service
         const { id, key } = config.serviceCreds.honeyDB
 
         return fetch(honeyDBBadHostsAPIURL, {
@@ -61,14 +114,66 @@ const rootQueryType = new GraphQLObjectType({
             // Disable the ESLint error 'camelcase' as HoneyDB returns the data with underscores in
             // the datas identifiers
             // eslint-disable-next-line camelcase
-            honeyBadgers = honeyBadgers.map(({ remote_host }) => ({
+            honeyBadgers = honeyBadgers.map(({ remote_host, count }) => ({
               ipAddress: remote_host,
+              count,
             }))
 
             return honeyBadgers
           })
       },
       description: `Gets the top ${maxHoneyDBDatums} honey badgers from the last 24 hours based on how many times they have been seen`,
+    },
+    autonomousSystems: {
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ASType))),
+      args: {
+        ipAddresses: {
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(GraphQLString)),
+          ),
+          description:
+            'A list of honey badger IPs used to look up their associated autonomous system',
+        },
+      },
+      resolve(parentNode, { ipAddresses }) {
+        // Return mock data from disk if signalled to do so
+        if (returnMockData) {
+          return promisify(readFile)(
+            resolve(__dirname, './data/autonomousSystemsData'),
+          ).then(data => JSON.parse(data))
+        }
+
+        // If we aren't returning returning mock data from disk then query the Apility service
+        const { token } = config.serviceCreds.apility
+        const url = getApilityASBatchAPIURL(ipAddresses)
+
+        return fetch(url, {
+          headers: {
+            [apilityAPIAuthTokenHeader]: token,
+          },
+        })
+          .then(res => res.json())
+          .then(json =>
+            json.response.map(entry => {
+              // Iterate over the entries in the response from Apility in regards to getting AS
+              // details and form it into the data representation that is defined by the GraphQL
+              // type that we return
+              const {
+                ip,
+                as: { name, asn, country },
+              } = entry
+
+              return {
+                ipAddress: ip,
+                name,
+                asn,
+                countryCode: country,
+              }
+            }),
+          )
+      },
+      description:
+        'Gets the autonomous systems associated with the IP addresses of honey badgers',
     },
   },
   description: 'The GraphQL queries available in the app',
