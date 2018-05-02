@@ -2,10 +2,8 @@
 /* eslint no-unused-expressions: 0, chai-friendly/no-unused-expressions: 2 */
 
 // General 3rd-party supporting test libs
-import chai, { expect } from 'chai'
-import chaiJestSnapshot from 'chai-jest-snapshot'
+import { expect } from 'chai'
 import { mount } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import waitUntil from 'async-wait-until'
 
 // General 3rd-party supporting libs
@@ -19,18 +17,7 @@ import config from './../../../../src/server/config'
 import honeyBadgerApp from './../../../../src/server/honeyBadgerApp'
 import HoneyBadgersTable from './../../../../src/client/components/HoneyBadgersTable'
 
-// Configure Chai to work with Jest
-chai.use(chaiJestSnapshot)
-
 describe('React component test: <App>', function() {
-  beforeEach(
-    'Configure chai-jest-snapshot for "Mocha configuration mode"',
-    function() {
-      chaiJestSnapshot.configureUsingMochaContext(this)
-      chaiJestSnapshot.setFilename(`${__filename}.snap`)
-    },
-  )
-
   // Reference to our server we use to test the integration of the <App> component with our
   // backend. Needs to be cleaned up when the tests end.
   let testServer = null
@@ -90,8 +77,6 @@ describe('React component test: <App>', function() {
         ['1.1.1.1', { ipAddress: '1.1.1.1', count: 987 }],
       ])
       appWrapper.setState({ honeyBadgers })
-
-      expect(toJson(appWrapper)).to.matchSnapshot()
     })
   })
 
