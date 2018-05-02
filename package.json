@@ -17,12 +17,11 @@
     "commitmsg": "commitlint -x @commitlint/config-angular -e",
     "precommit": "lint-staged && yarn test",
     "test": "run-s test:mocha test:eslint",
-    "test:mocha":
-      "mocha --exit --require test/utils/setup-babel-register --require @babel/polyfill --require test/utils/setup-dom --require test/utils/setup-enzyme --recursive \"test/unit/**/*.{js,jsx}\" \"test/int/**/*.{js,jsx}\"",
+    "test:mocha": "yarn test:mocha:unit && yarn test:mocha:int",
     "test:mocha:unit":
-      "mocha --exit --require test/utils/setup-babel-register --require @babel/polyfill --require test/utils/setup-dom --require test/utils/setup-enzyme --recursive \"test/unit/**/*.{js,jsx}\"",
+      "mocha --exit --require test/utils/setup-babel-register --require @babel/polyfill --require test/utils/setup-dom --require test/utils/setup-enzyme --recursive \"test/unit/**/*.spec.{js,jsx}\"",
     "test:mocha:int":
-      "mocha --exit --require test/utils/setup-babel-register --require @babel/polyfill --require test/utils/setup-dom --require test/utils/setup-enzyme --recursive \"test/int/**/*.{js,jsx}\"",
+      "mocha --exit --require test/utils/setup-babel-register --require @babel/polyfill --require test/utils/setup-dom --require test/utils/setup-enzyme --recursive \"test/int/**/*.spec.{js,jsx}\"",
     "test:eslint":
       "eslint --max-warnings 0 --cache --ext .js,.jsx,.spec.js,.spec.jsx src/* test/*",
     "build:cli": "webpack --mode production --config webpack.config.js",
@@ -42,6 +41,10 @@
     "*.{js,jsx,json,css,md}": ["prettier --write", "git add"]
   },
   "dependencies": {
+    "@devexpress/dx-react-core": "^1.1.2",
+    "@devexpress/dx-react-grid": "^1.1.2",
+    "@devexpress/dx-react-grid-material-ui": "^1.1.2",
+    "@material-ui/icons": "^1.0.0-beta.43",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",
     "apollo-link-http": "^1.5.4",
@@ -52,6 +55,7 @@
     "graphql-tag": "^2.9.1",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "1.0.0-beta.43",
+    "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   },

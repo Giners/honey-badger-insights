@@ -9,6 +9,7 @@ const config = {
   app: {
     hostURL: process.env.HOST_URL || 'http://localhost',
     port: process.env.port || 3000,
+    returnMockData: process.env.RETURN_MOCK_DATA || false,
   },
   // The URIs of our services
   serviceURIs: {
@@ -16,6 +17,9 @@ const config = {
   },
   // Service credentials
   serviceCreds: {
+    apility: {
+      token: process.env.APILITY_API_AUTH_TOKEN || 'No API auth token found!',
+    },
     honeyDB: {
       id: process.env.HONEYDB_API_AUTH_ID || 'No API auth ID found!',
       key: process.env.HONEYDB_API_AUTH_KEY || 'No API auth key found!',

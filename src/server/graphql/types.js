@@ -5,7 +5,30 @@ import {
   GraphQLString,
 } from 'graphql'
 
-const TopHoneyBadgerType = new GraphQLObjectType({
+export const ASType = new GraphQLObjectType({
+  name: 'AS',
+  fields: {
+    ipAddress: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: 'The IP address of a honey badger that belongs to the AS',
+    },
+    name: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: 'The name of the AS',
+    },
+    asn: {
+      type: new GraphQLNonNull(GraphQLInt),
+      description: 'Unique identifying number for the AS',
+    },
+    countryCode: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: 'The two letter country code that the AS resides in',
+    },
+  },
+  description: 'Information regarding an autonomous system',
+})
+
+export const TopHoneyBadgerType = new GraphQLObjectType({
   name: 'TopHoneyBadger',
   fields: {
     ipAddress: {
@@ -21,5 +44,3 @@ const TopHoneyBadgerType = new GraphQLObjectType({
   description:
     'One of the most frequently seen honey badgers in the laster 24 hours',
 })
-
-export default TopHoneyBadgerType
