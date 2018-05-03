@@ -7,8 +7,9 @@ import React from 'react'
 
 import HoneyBadgersTable from './../components/HoneyBadgersTable'
 import {
-  topHoneyBadgersQuery,
   autonomousSystemsQuery,
+  geoLocationsQuery,
+  topHoneyBadgersQuery,
 } from './../graphql/queries'
 import config from './../../server/config'
 
@@ -87,6 +88,39 @@ class App extends React.Component {
   }
 
   /**
+   * Helper method that given a map of honey badgers where they are keyed off of their IP address
+   * will make a query to the GraphQL service/API endpoint for said honey badger for info about
+   * where said honey badger is located geospatially.
+   *
+   * Note that this function isn't pure and has side effects in that it modifies the map of honey
+   * badgers passed into it to add in the info about the locations that has been collected.
+   *
+   * @param {Map<string, HoneyBadger>} honeyBadgers - Map of honey badgers where they are keyed off
+   * of their IP address
+   *
+   * @return {Promise<undefined, error>} Returns a promise where it will resolve if able to
+   * successfully query for info about the locations as well as add the info to the map of honey
+   * badgers that is passed into it. Should we fail to query the GraphQL service/API endpoint
+   * or for any other reason this promise will be rejected with the error.
+   */
+  static async collectGeoLocationsInfo(honeyBadgers) {
+    const ipAddresses = [...honeyBadgers.keys()]
+
+    const { geoLocations } = (await apolloClient.query({
+      query: geoLocationsQuery,
+      variables: { ipAddresses },
+    })).data
+
+    // Join the data about the location of the honey badger with the existing data about honey
+    // badgers
+    geoLocations.forEach(({ ipAddress, ...rest }) => {
+      const honeyBadger = honeyBadgers.get(ipAddress)
+
+      honeyBadgers.set(ipAddress, { ...honeyBadger, geoLocation: { ...rest } })
+    })
+  }
+
+  /**
    * Creates a new stateful React component that is responsible for providing the "root" for the
    * visual and logical React components that make up the app.
    */
@@ -112,11 +146,14 @@ class App extends React.Component {
 
       this.setState({ honeyBadgers })
 
-      // Now collect information about the autonomous systems that oversee the address the of the
-      // honey badgers from our GraphQL service/API endpoint and enqueue a request to set the state
-      // of the app with the new info we collected.
+      // Now collect the following info about honey badgers from our GraphQL service/API endpoint
+      // and enqueue a request to set the state of the app with the new info we collected:
+      // * The autonomous systems that oversee the IP address of the honey badger
+      // * The geospatial location of a honey badgers IP address
       await App.collectAutonomousSystemsInfo(honeyBadgers)
+      this.setState({ honeyBadgers })
 
+      await App.collectGeoLocationsInfo(honeyBadgers)
       this.setState({ honeyBadgers })
     } catch (error) {
       // It is okay to call 'setState()' in 'componentDidMount()' as discussed in the React docs

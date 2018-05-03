@@ -66,7 +66,7 @@ describe('React component test: <HoneyBadgersTable>', function() {
 
     it('Rows rendered (honey badgers data w/o additional data)', function() {
       // Create data as if we have only issued our initial GraphQL query of 'topHoneyBadgers'
-      const honeyBadgers = [{ ipAddress: '1.1.1.1', count: '987' }]
+      const honeyBadgers = [{ ipAddress: '1.1.1.1', count: 987 }]
 
       hbtWrapper.setProps({ honeyBadgers })
 
@@ -75,18 +75,23 @@ describe('React component test: <HoneyBadgersTable>', function() {
       const rows = hbtWrapper.find(Grid).prop('rows')
       expect(rows.length).to.equal(honeyBadgers.length)
 
-      rows.forEach(row => {
-        // This assertion is meant to remind us to update the following assertions. It will fail as
-        // we add additional keys to the row data and don't update the tests. We currently expect
-        // the following keys: 'ipAddress', 'count', 'asn'
-        expect(Object.keys(row).length).to.equal(3)
-        expect(row.ipAddress).to.not.be.empty
-        expect(parseInt(row.count, 10)).to.be.above(0)
+      // Verify that we correctly set the data in a row given a honey badger
+      const honeyBadger = honeyBadgers[0]
+      const row = rows[0]
 
-        // This test presumes we haven't yet queried for autonomous systems data so we expect it any
-        // info we would display about autonomous systems to say 'Loading' at this point
-        expect(row.asn).to.equal('Loading')
-      })
+      // This assertion is meant to remind us to update the following assertions. It will fail as
+      // we add additional keys to the row data and don't update the tests. We currently expect
+      // the following keys: 'ipAddress', 'count', 'country', 'asn'
+      expect(Object.keys(row).length).to.equal(4)
+
+      // Now check for the data we expect...
+      expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
+      expect(parseInt(row.count, 10)).to.equal(honeyBadger.count)
+
+      // This test presumes we haven't yet queried for other data yet so we expect any info we
+      // from other data we would display to say 'Loading' at this point
+      expect(row.country).to.equal('Loading')
+      expect(row.asn).to.equal('Loading')
 
       expect(toJson(hbtWrapper)).to.matchSnapshot()
     })
@@ -97,7 +102,7 @@ describe('React component test: <HoneyBadgersTable>', function() {
       const honeyBadgers = [
         {
           ipAddress: '1.1.1.1',
-          count: '987',
+          count: 987,
           as: {
             name: 'OVH SAS',
             asn: 16276,
@@ -113,15 +118,69 @@ describe('React component test: <HoneyBadgersTable>', function() {
       const rows = hbtWrapper.find(Grid).prop('rows')
       expect(rows.length).to.equal(honeyBadgers.length)
 
-      rows.forEach(row => {
-        // This assertion is meant to remind us to update the following assertions. It will fail as
-        // we add additional keys to the row data and don't update the tests. We currently expect
-        // the following keys: 'ipAddress', 'count', 'asn'
-        expect(Object.keys(row).length).to.equal(3)
-        expect(row.ipAddress).to.not.be.empty
-        expect(parseInt(row.count, 10)).to.be.above(0)
-        expect(parseInt(row.asn, 10)).to.be.above(0)
-      })
+      // Verify that we correctly set the data in a row given a honey badger
+      const honeyBadger = honeyBadgers[0]
+      const row = rows[0]
+
+      // This assertion is meant to remind us to update the following assertions. It will fail as
+      // we add additional keys to the row data and don't update the tests. We currently expect
+      // the following keys: 'ipAddress', 'count', 'country, 'asn'
+      expect(Object.keys(row).length).to.equal(4)
+
+      // Now check for the data we expect...
+      expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
+      expect(parseInt(row.count, 10)).to.equal(honeyBadger.count)
+      expect(parseInt(row.asn, 10)).to.equal(honeyBadger.as.asn)
+
+      // This test presumes we haven't yet queried for geospatial locations data so we expect any
+      // info we would display about that data to say 'Loading' at this point
+      expect(row.country).to.equal('Loading')
+
+      expect(toJson(hbtWrapper)).to.matchSnapshot()
+    })
+
+    it('Rows rendered (honey badgers data w/ AS and location data)', function() {
+      // Create data as if we have issued the 'topHoneyBadgers', 'autonomousSystems', and
+      // 'geoLocations' queries to our GraphQL service/API endpoint
+      const honeyBadgers = [
+        {
+          ipAddress: '1.1.1.1',
+          count: 987,
+          geoLocation: {
+            latitude: 47.6062,
+            longitude: 122.3321,
+            country: 'United State',
+            continent: 'North America',
+          },
+          as: {
+            name: 'OVH SAS',
+            asn: 16276,
+            countryCode: 'FR',
+          },
+        },
+      ]
+
+      hbtWrapper.setProps({ honeyBadgers })
+
+      // We should have some rows since we have some honey badgers. Check and ensure that each row
+      // specifies it is loading data where appropriate
+      const rows = hbtWrapper.find(Grid).prop('rows')
+      expect(rows.length).to.equal(honeyBadgers.length)
+
+      // Verify that we correctly set the data in a row given a honey badger
+      const honeyBadger = honeyBadgers[0]
+      const row = rows[0]
+
+      // This assertion is meant to remind us to update the following assertions. It will fail as
+      // we add additional keys to the row data and don't update the tests. We currently expect
+      // the following keys: 'ipAddress', 'count', 'country', 'asn'
+      expect(Object.keys(row).length).to.equal(4)
+
+      // Now check the data we expect...
+      expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
+      expect(parseInt(row.count, 10)).to.equal(honeyBadger.count)
+      expect(parseInt(row.asn, 10)).to.equal(honeyBadger.as.asn)
+      expect(row.country).to.equal(honeyBadger.geoLocation.country)
 
       expect(toJson(hbtWrapper)).to.matchSnapshot()
     })

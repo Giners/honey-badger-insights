@@ -19,3 +19,15 @@ export const autonomousSystemsQuery = gql`
     }
   }
 `
+
+export const geoLocationsQuery = gql`
+  query GeoLocations($ipAddresses: [String!]!) {
+    geoLocations(ipAddresses: $ipAddresses) {
+      ipAddress
+      latitude
+      longitude
+      country
+      continent
+    }
+  }
+`

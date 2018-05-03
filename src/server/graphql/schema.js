@@ -1,3 +1,9 @@
+// ESLint config
+// We disable the ESLing rule 'camelcase' as the data returned to us by the 3rd party services we
+// use is snake cased. We ourselves shouldn't look to use snake case but continue to use camelcased
+// identifiers.
+/* eslint-disable camelcase */
+
 import { promisify } from 'util'
 import { readFile } from 'fs'
 import { resolve } from 'path'
@@ -12,7 +18,8 @@ import {
   GraphQLSchema,
 } from 'graphql'
 
-import { ASType, TopHoneyBadgerType } from './types'
+import { ASType, GeoLocationType, TopHoneyBadgerType } from './types'
+
 import config from './../config'
 
 /**
@@ -24,6 +31,16 @@ import config from './../config'
  * set of IPs as a list that is comma separated.
  */
 const apilityASBatchAPIURL = 'https://api.apility.net/as_batch/ip'
+
+/**
+ * The URL for the Apility API that returns geospatial info for a set of IPs. The API expects the
+ * set of IPs as a list of comma separated IPs used as the last URI segment of this URL (i.e. you
+ * need to add them).
+ *
+ * Note that the URL doesn't contain an ending '/' character. You need to add it before adding the
+ * set of IPs as a list that is comma separated.
+ */
+const apilityGeoIPBatchAPIURL = 'https://api.apility.net/geoip_batch'
 
 /**
  * Apility auth header for accessing its APIs that identifies who is accessing the API based on a
@@ -44,6 +61,20 @@ const apilityAPIAuthTokenHeader = 'X-Auth-Token'
  */
 const getApilityASBatchAPIURL = ipAddresses =>
   `${apilityASBatchAPIURL}/${ipAddresses.join(',')}`
+
+/**
+ * Helper method to construct the URL used to query for the geospatial info associated with a set of
+ * IPs from Apility.
+ *
+ * @param {string[]} ipAddresses - Array of IP addresses to query for the geospatial info associated
+ * with them. No checking/validation is done of this parameter so if anything but an array of
+ * strings is passed will cause this function to break.
+ *
+ * @returns {string} - Formed URL that can be used to query for the geospatial info associated with
+ * a set of IPs from Apility
+ */
+const getApilityGeoIPBatchAPIURL = ipAddresses =>
+  `${apilityGeoIPBatchAPIURL}/${ipAddresses.join(',')}`
 
 /** The URL for the HoneyDB API that returns a list of bad hosts from the last 24 hours */
 const honeyDBBadHostsAPIURL = 'https://riskdiscovery.com/honeydb/api/bad-hosts'
@@ -88,7 +119,7 @@ const rootQueryType = new GraphQLObjectType({
           ).then(data => JSON.parse(data))
         }
 
-        // If we aren't returning returning mock data from disk then query the HoneyDB service
+        // If we aren't returning mock data from disk then query the HoneyDB service
         const { id, key } = config.serviceCreds.honeyDB
 
         return fetch(honeyDBBadHostsAPIURL, {
@@ -110,10 +141,7 @@ const rootQueryType = new GraphQLObjectType({
               honeyBadgers = honeyBadgers.slice(0, maxHoneyDBDatums)
             }
 
-            // Map the data returned by HoneyDB to return an object defined by our GraphQL schema.
-            // Disable the ESLint error 'camelcase' as HoneyDB returns the data with underscores in
-            // the datas identifiers
-            // eslint-disable-next-line camelcase
+            // Map the data returned by HoneyDB to return a type defined by our GraphQL schema.
             honeyBadgers = honeyBadgers.map(({ remote_host, count }) => ({
               ipAddress: remote_host,
               count,
@@ -143,7 +171,7 @@ const rootQueryType = new GraphQLObjectType({
           ).then(data => JSON.parse(data))
         }
 
-        // If we aren't returning returning mock data from disk then query the Apility service
+        // If we aren't returning mock data from disk then query the Apility service
         const { token } = config.serviceCreds.apility
         const url = getApilityASBatchAPIURL(ipAddresses)
 
@@ -174,6 +202,60 @@ const rootQueryType = new GraphQLObjectType({
       },
       description:
         'Gets the autonomous systems associated with the IP addresses of honey badgers',
+    },
+    geoLocations: {
+      type: new GraphQLNonNull(
+        new GraphQLList(new GraphQLNonNull(GeoLocationType)),
+      ),
+      args: {
+        ipAddresses: {
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(GraphQLString)),
+          ),
+          description:
+            'A list of honey badger IPs used to look up their associated geospatial locations',
+        },
+      },
+      resolve(parentNode, { ipAddresses }) {
+        // Return mock data from disk if signalled to do so
+        if (returnMockData) {
+          return promisify(readFile)(
+            resolve(__dirname, './data/geoLocationsData'),
+          ).then(data => JSON.parse(data))
+        }
+
+        // If we aren't returning mock data from disk then query the Apility service
+        const { token } = config.serviceCreds.apility
+        const url = getApilityGeoIPBatchAPIURL(ipAddresses)
+
+        return fetch(url, {
+          headers: {
+            [apilityAPIAuthTokenHeader]: token,
+          },
+        })
+          .then(res => res.json())
+          .then(json =>
+            json.response.map(entry => {
+              // Iterate over the entries in the response from Apility in regards to getting
+              // geospatial location details and form it into the data representation that is
+              // defined by the GraphQL type that we return
+              const {
+                ip,
+                geoip: { latitude, longitude, country_names, continent_names },
+              } = entry
+
+              return {
+                ipAddress: ip,
+                latitude,
+                longitude,
+                country: country_names.en,
+                continent: continent_names.en,
+              }
+            }),
+          )
+      },
+      description:
+        'Gets the geospatial locations associated with the IP addresses of honey badgers',
     },
   },
   description: 'The GraphQL queries available in the app',
