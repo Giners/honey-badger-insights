@@ -29,6 +29,7 @@
     "start:dev:cli":
       "webpack-dev-server --mode development --debug --progress --host 0.0.0.0",
     "start:dev:svr": "babel-node src/server/server",
+    "watch:dev:svr": "nodemon -w src/server --exec \"yarn start:dev:svr\"",
     "doc": "esdoc",
     "start:doc": "http-server ./docs -c-1"
   },
@@ -96,6 +97,7 @@
     "jsdom": "^11.9.0",
     "lint-staged": "^7.0.4",
     "mocha": "^5.1.1",
+    "nodemon": "^1.17.3",
     "prettier": "^1.12.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15",

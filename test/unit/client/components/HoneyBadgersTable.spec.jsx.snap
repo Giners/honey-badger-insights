@@ -13,12 +13,67 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
         "title": "Times Seen Last 24 Hours",
       },
       Object {
+        "name": "country",
+        "title": "Country of Origin",
+      },
+      Object {
         "name": "asn",
         "title": "Autonomous System #",
       },
     ]
   }
   rows={Array []}
+>
+  <PagingState
+    defaultCurrentPage={0}
+    defaultPageSize={10}
+    pageSize={5}
+  />
+  <IntegratedPaging />
+  <Table$$1
+    messages={Object {}}
+  />
+  <TableHeaderRow$$1
+    messages={Object {}}
+  />
+  <PagingPanel$$1
+    messages={Object {}}
+  />
+</Grid$$1>
+`;
+
+exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Rows rendered (honey badgers data w/ AS and location data) 1`] = `
+<Grid$$1
+  columns={
+    Array [
+      Object {
+        "name": "ipAddress",
+        "title": "IP Address",
+      },
+      Object {
+        "name": "count",
+        "title": "Times Seen Last 24 Hours",
+      },
+      Object {
+        "name": "country",
+        "title": "Country of Origin",
+      },
+      Object {
+        "name": "asn",
+        "title": "Autonomous System #",
+      },
+    ]
+  }
+  rows={
+    Array [
+      Object {
+        "asn": 16276,
+        "count": 987,
+        "country": "United State",
+        "ipAddress": "1.1.1.1",
+      },
+    ]
+  }
 >
   <PagingState
     defaultCurrentPage={0}
@@ -51,6 +106,10 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
         "title": "Times Seen Last 24 Hours",
       },
       Object {
+        "name": "country",
+        "title": "Country of Origin",
+      },
+      Object {
         "name": "asn",
         "title": "Autonomous System #",
       },
@@ -60,7 +119,8 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Array [
       Object {
         "asn": 16276,
-        "count": "987",
+        "count": 987,
+        "country": "Loading",
         "ipAddress": "1.1.1.1",
       },
     ]
@@ -97,6 +157,10 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
         "title": "Times Seen Last 24 Hours",
       },
       Object {
+        "name": "country",
+        "title": "Country of Origin",
+      },
+      Object {
         "name": "asn",
         "title": "Autonomous System #",
       },
@@ -106,7 +170,8 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Array [
       Object {
         "asn": "Loading",
-        "count": "987",
+        "count": 987,
+        "country": "Loading",
         "ipAddress": "1.1.1.1",
       },
     ]

@@ -108,30 +108,59 @@ describe('React component test: <App>', function() {
     it('Promise resolves to map with autonomous systems info injected', async function() {
       // First query for honey badgers so we can pass them to the
       // 'App.collectAutnomousSystemsInfo()' method...
-      const honeyBadgers = await App.collectTopHoneyBadgersInfo()
+      let honeyBadgers = await App.collectTopHoneyBadgersInfo()
 
       // Now query for autonomous systems info and check that the map of honey badgers has been
       // updated inline with the invocation of the 'App.collectAutonomousSystemsInfo()' method...
-      const promise = App.collectAutonomousSystemsInfo(honeyBadgers)
+      await App.collectAutonomousSystemsInfo(honeyBadgers)
 
-      // So weird... I would have liked to await the call to 'App.collectAutonomousSystemsInfo' but
-      // was getting errors like 'TypeError: _App.default.collectAutonomousSystemsInfo(...)'. This
-      // confused me since we are able to do this with 'App.collectTopHoneyBadgersInfo()'. I tried
-      // to resolve it with some Babel plugins (plugin-transform-async-to-generator and
-      // plugin-transform-runtime) but they didn't work. In the future if there is more time we
-      // ought to revisit this problem and solve it so we can learn from it.
-      return promise.then(() => {
-        // Check that we correctly populated our entries on our map...
-        ;[...honeyBadgers.values()].forEach(value => {
-          expect(value).to.be.an('object')
-          expect(value.as).to.be.an('object')
-          expect(value.as.name).to.be.a('string')
-          expect(value.as.name).to.not.be.empty
-          expect(value.as.asn).to.be.a('number')
-          expect(value.as.asn).to.be.above(0)
-          expect(value.as.countryCode).to.be.a('string')
-          expect(value.as.countryCode).to.not.be.empty
-        })
+      // Check that we correctly populated our entries on our map...
+      honeyBadgers = [...honeyBadgers.values()]
+      honeyBadgers.forEach(honeyBadger => {
+        expect(honeyBadger).to.be.an('object')
+        expect(honeyBadger.as).to.be.an('object')
+
+        const { name, asn, countryCode } = honeyBadger.as
+
+        expect(name).to.be.a('string')
+        expect(name).to.not.be.empty
+        expect(asn).to.be.a('number')
+        expect(asn).to.be.above(0)
+        expect(countryCode).to.be.a('string')
+        expect(countryCode).to.not.be.empty
+      })
+    })
+  })
+
+  describe('collectGeoLocationsInfo():', function() {
+    it('Promise resolves to map with geospatial locations info injected', async function() {
+      // First query for honey badgers so we can pass them to the
+      // 'App.collectGeoLocationsInfo()' method...
+      let honeyBadgers = await App.collectTopHoneyBadgersInfo()
+
+      // Now query for geospatial locations info and check that the map of honey badgers has been
+      // updated inline with the invocation of the 'App.collectGeoLocationsInfo()' method...
+      await App.collectGeoLocationsInfo(honeyBadgers)
+
+      // Check that we correctly populated our entries on our map...
+      honeyBadgers = [...honeyBadgers.values()]
+      honeyBadgers.forEach(honeyBadger => {
+        expect(honeyBadger).to.be.an('object')
+        expect(honeyBadger.geoLocation).to.be.an('object')
+
+        const {
+          latitude,
+          longitude,
+          country,
+          continent,
+        } = honeyBadger.geoLocation
+
+        expect(latitude).to.be.a('number')
+        expect(longitude).to.be.a('number')
+        expect(country).to.be.a('string')
+        expect(country).to.not.be.empty
+        expect(continent).to.be.a('string')
+        expect(continent).to.not.be.empty
       })
     })
   })

@@ -21,12 +21,24 @@ const getHoneyBadgersRows = honeyBadgers =>
     // Supply the minimum amount of info we expect in a row which is the IP address and the amount
     // of times we have seen the entity in the last 24 hours. Add a 'Loading' flag as the default
     // for all of the other info that may not be loaded yet.
-    const { ipAddress, count } = honeyBadger
-    const row = { ipAddress, count, asn: 'Loading' }
+    const { ipAddress, count, geoLocation, as } = honeyBadger
 
-    // Add the autonomous system number if autonomous system info has been loaded...
-    if (honeyBadger.as) {
-      row.asn = honeyBadger.as.asn
+    const row = {
+      ipAddress,
+      count,
+      country: 'Loading',
+      asn: 'Loading',
+    }
+
+    // Add the additional info if it has been loaded:
+    // * Autonomous system number if autonomous system info has been loaded
+    // * Country of origin if geospatial location info has been loaded
+    if (geoLocation) {
+      row.country = geoLocation.country
+    }
+
+    if (as) {
+      row.asn = as.asn
     }
 
     return row
@@ -38,6 +50,7 @@ const HoneyBadgersTable = ({ honeyBadgers }) => (
     columns={[
       { name: 'ipAddress', title: 'IP Address' },
       { name: 'count', title: 'Times Seen Last 24 Hours' },
+      { name: 'country', title: 'Country of Origin' },
       { name: 'asn', title: 'Autonomous System #' },
     ]}
   >
