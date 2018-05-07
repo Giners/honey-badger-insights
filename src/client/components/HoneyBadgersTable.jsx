@@ -1,14 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { PagingState, IntegratedPaging } from '@devexpress/dx-react-grid'
+import {
+  PagingState,
+  IntegratedPaging,
+  RowDetailState,
+  SearchState,
+  IntegratedFiltering,
+} from '@devexpress/dx-react-grid'
 
 import {
   Grid,
   Table,
   TableHeaderRow,
+  TableRowDetail,
   PagingPanel,
+  Toolbar,
+  SearchPanel,
 } from '@devexpress/dx-react-grid-material-ui'
+
+import HoneyBadgerDetails from './HoneyBadgerDetails'
 
 /**
  * Takes a list of honey badgers and their details and turns it into rows of details for use in the
@@ -44,31 +55,44 @@ const getHoneyBadgersRows = honeyBadgers =>
     return row
   })
 
-const HoneyBadgersTable = ({ honeyBadgers }) => (
-  <Grid
-    rows={getHoneyBadgersRows(honeyBadgers)}
-    columns={[
-      { name: 'ipAddress', title: 'IP Address' },
-      { name: 'count', title: 'Times Seen Last 24 Hours' },
-      { name: 'country', title: 'Country of Origin' },
-      { name: 'asn', title: 'Autonomous System #' },
-    ]}
-  >
-    <PagingState defaultCurrentPage={0} pageSize={5} />
-    <IntegratedPaging />
-    <Table />
-    <TableHeaderRow />
-    <PagingPanel />
-  </Grid>
-)
+const HoneyBadgersTable = ({ honeyBadgers }) => {
+  const renderHoneyBadgerDetails = ({ row: { ipAddress } }) => (
+    <HoneyBadgerDetails honeyBadger={honeyBadgers.get(ipAddress)} />
+  )
+
+  renderHoneyBadgerDetails.propTypes = {
+    row: PropTypes.shape({
+      ipAddress: PropTypes.string.isRequired,
+    }).isRequired,
+  }
+
+  return (
+    <Grid
+      rows={getHoneyBadgersRows([...honeyBadgers.values()])}
+      columns={[
+        { name: 'ipAddress', title: 'IP Address' },
+        { name: 'count', title: 'Times Seen Last 24 Hours' },
+        { name: 'country', title: 'Country of Origin' },
+        { name: 'asn', title: 'Autonomous System #' },
+      ]}
+    >
+      <RowDetailState />
+      <SearchState />
+      <IntegratedFiltering />
+      <PagingState defaultCurrentPage={0} pageSize={5} />
+      <IntegratedPaging />
+      <Table />
+      <TableHeaderRow />
+      <TableRowDetail contentComponent={renderHoneyBadgerDetails} />
+      <Toolbar />
+      <SearchPanel />
+      <PagingPanel />
+    </Grid>
+  )
+}
 
 HoneyBadgersTable.propTypes = {
-  honeyBadgers: PropTypes.arrayOf(
-    PropTypes.shape({
-      ipAddress: PropTypes.string,
-      count: PropTypes.number,
-    }),
-  ).isRequired,
+  honeyBadgers: PropTypes.instanceOf(Map).isRequired,
 }
 
 export default HoneyBadgersTable

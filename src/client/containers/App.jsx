@@ -169,7 +169,7 @@ class App extends React.Component {
       return `The following error occurred: ${error}`
     }
 
-    return <HoneyBadgersTable honeyBadgers={[...honeyBadgers.values()]} />
+    return <HoneyBadgersTable honeyBadgers={honeyBadgers} />
   }
 }
 

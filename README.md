@@ -56,6 +56,30 @@ const config = {
 export default config
 ```
 
+## Google Maps JavaScript API
+
+The app leverages the Google Maps JavaScript API to display a map of a geospatial location (i.e. latitude/longitude) of a honey badger relative to the city they were tracked to. To make use of the Google Maps JavaScript API you need to both enable it and generate an API key. To do so:
+
+* Enable the Google Maps JavaScript API
+* Obtain a Google API key
+
+You can do all of these things from your Google developers console here: https://console.developers.google.com
+
+After obtaining your Google API key you need to config the app to use it. Edit the file at `public/index.html` and modify the `<script>` element in the `<head>` that loads the Google Maps JavaScript API and replace `YOUR_GOOGLE_API_KEY` with your API key. The `public/index.html` ought to look like the following:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Other elements in the head ... -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=BIzaSyBitMQbVSfc7mg-dMEl_bQhJx7xmp9rcB0"></script>
+  </head>
+  <body>
+    <!-- Other elements in the body ... -->
+  </body>
+</html>
+```
+
 ## Returning Mock Data
 
 Some of the 3rd party services that the app leverages set data/consumption limits/quotas. When doing development work with the app these limits/quotas could potentially be hit depending on the service tier you have signed up for. To this end mock data may be returned from the GraphQL service/API endpoint to avoid hitting your limits/quotas. The mock data returned is the same as the data returned by the 3rd party services except its not realtime data. To cause the GraphQL service/API endpoint to return mock data you can set the environment variable `RETURN_MOCK_DATA` to `true`.

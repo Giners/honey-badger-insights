@@ -24,6 +24,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
   }
   rows={Array []}
 >
+  <RowDetailState
+    defaultExpandedRowIds={Array []}
+  />
+  <SearchState
+    defaultValue=""
+  />
+  <IntegratedFiltering />
   <PagingState
     defaultCurrentPage={0}
     defaultPageSize={10}
@@ -34,6 +41,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     messages={Object {}}
   />
   <TableHeaderRow$$1
+    messages={Object {}}
+  />
+  <TableRowDetail$$1
+    contentComponent={[Function]}
+  />
+  <Toolbar$$1 />
+  <SearchPanel$$1
     messages={Object {}}
   />
   <PagingPanel$$1
@@ -75,6 +89,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     ]
   }
 >
+  <RowDetailState
+    defaultExpandedRowIds={Array []}
+  />
+  <SearchState
+    defaultValue=""
+  />
+  <IntegratedFiltering />
   <PagingState
     defaultCurrentPage={0}
     defaultPageSize={10}
@@ -85,6 +106,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     messages={Object {}}
   />
   <TableHeaderRow$$1
+    messages={Object {}}
+  />
+  <TableRowDetail$$1
+    contentComponent={[Function]}
+  />
+  <Toolbar$$1 />
+  <SearchPanel$$1
     messages={Object {}}
   />
   <PagingPanel$$1
@@ -126,6 +154,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     ]
   }
 >
+  <RowDetailState
+    defaultExpandedRowIds={Array []}
+  />
+  <SearchState
+    defaultValue=""
+  />
+  <IntegratedFiltering />
   <PagingState
     defaultCurrentPage={0}
     defaultPageSize={10}
@@ -136,6 +171,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     messages={Object {}}
   />
   <TableHeaderRow$$1
+    messages={Object {}}
+  />
+  <TableRowDetail$$1
+    contentComponent={[Function]}
+  />
+  <Toolbar$$1 />
+  <SearchPanel$$1
     messages={Object {}}
   />
   <PagingPanel$$1
@@ -177,6 +219,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     ]
   }
 >
+  <RowDetailState
+    defaultExpandedRowIds={Array []}
+  />
+  <SearchState
+    defaultValue=""
+  />
+  <IntegratedFiltering />
   <PagingState
     defaultCurrentPage={0}
     defaultPageSize={10}
@@ -187,6 +236,13 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     messages={Object {}}
   />
   <TableHeaderRow$$1
+    messages={Object {}}
+  />
+  <TableRowDetail$$1
+    contentComponent={[Function]}
+  />
+  <Toolbar$$1 />
+  <SearchPanel$$1
     messages={Object {}}
   />
   <PagingPanel$$1
