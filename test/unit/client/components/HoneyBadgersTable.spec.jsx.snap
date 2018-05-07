@@ -1,196 +1,292 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Initial props/state 1`] = `
-<Grid$$1
-  columns={
-    Array [
-      Object {
-        "name": "ipAddress",
-        "title": "IP Address",
-      },
-      Object {
-        "name": "count",
-        "title": "Times Seen Last 24 Hours",
-      },
-      Object {
-        "name": "country",
-        "title": "Country of Origin",
-      },
-      Object {
-        "name": "asn",
-        "title": "Autonomous System #",
-      },
-    ]
-  }
-  rows={Array []}
->
-  <PagingState
-    defaultCurrentPage={0}
-    defaultPageSize={10}
-    pageSize={5}
-  />
-  <IntegratedPaging />
-  <Table$$1
-    messages={Object {}}
-  />
-  <TableHeaderRow$$1
-    messages={Object {}}
-  />
-  <PagingPanel$$1
-    messages={Object {}}
-  />
-</Grid$$1>
+<div>
+  <WithStyles(Typography)
+    paragraph={true}
+  >
+    Top honey badger activity in the last 24 hours. Click the
+     
+    <pure(KeyboardArrowRight) />
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+  </WithStyles(Typography)>
+  <Grid$$1
+    columns={
+      Array [
+        Object {
+          "name": "ipAddress",
+          "title": "IP Address",
+        },
+        Object {
+          "name": "count",
+          "title": "Times Seen Last 24 Hours",
+        },
+        Object {
+          "name": "country",
+          "title": "Country of Origin",
+        },
+        Object {
+          "name": "asn",
+          "title": "Autonomous System #",
+        },
+      ]
+    }
+    rows={Array []}
+  >
+    <RowDetailState
+      defaultExpandedRowIds={Array []}
+    />
+    <SearchState
+      defaultValue=""
+    />
+    <IntegratedFiltering />
+    <PagingState
+      defaultCurrentPage={0}
+      defaultPageSize={10}
+      pageSize={5}
+    />
+    <IntegratedPaging />
+    <Table$$1
+      messages={Object {}}
+    />
+    <TableHeaderRow$$1
+      messages={Object {}}
+    />
+    <TableRowDetail$$1
+      contentComponent={[Function]}
+    />
+    <Toolbar$$1 />
+    <SearchPanel$$1
+      messages={Object {}}
+    />
+    <PagingPanel$$1
+      messages={Object {}}
+    />
+  </Grid$$1>
+</div>
 `;
 
 exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Rows rendered (honey badgers data w/ AS and location data) 1`] = `
-<Grid$$1
-  columns={
-    Array [
-      Object {
-        "name": "ipAddress",
-        "title": "IP Address",
-      },
-      Object {
-        "name": "count",
-        "title": "Times Seen Last 24 Hours",
-      },
-      Object {
-        "name": "country",
-        "title": "Country of Origin",
-      },
-      Object {
-        "name": "asn",
-        "title": "Autonomous System #",
-      },
-    ]
-  }
-  rows={
-    Array [
-      Object {
-        "asn": 16276,
-        "count": 987,
-        "country": "United State",
-        "ipAddress": "1.1.1.1",
-      },
-    ]
-  }
->
-  <PagingState
-    defaultCurrentPage={0}
-    defaultPageSize={10}
-    pageSize={5}
-  />
-  <IntegratedPaging />
-  <Table$$1
-    messages={Object {}}
-  />
-  <TableHeaderRow$$1
-    messages={Object {}}
-  />
-  <PagingPanel$$1
-    messages={Object {}}
-  />
-</Grid$$1>
+<div>
+  <WithStyles(Typography)
+    paragraph={true}
+  >
+    Top honey badger activity in the last 24 hours. Click the
+     
+    <pure(KeyboardArrowRight) />
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+  </WithStyles(Typography)>
+  <Grid$$1
+    columns={
+      Array [
+        Object {
+          "name": "ipAddress",
+          "title": "IP Address",
+        },
+        Object {
+          "name": "count",
+          "title": "Times Seen Last 24 Hours",
+        },
+        Object {
+          "name": "country",
+          "title": "Country of Origin",
+        },
+        Object {
+          "name": "asn",
+          "title": "Autonomous System #",
+        },
+      ]
+    }
+    rows={
+      Array [
+        Object {
+          "asn": 16276,
+          "count": 987,
+          "country": "United State",
+          "ipAddress": "1.1.1.1",
+        },
+      ]
+    }
+  >
+    <RowDetailState
+      defaultExpandedRowIds={Array []}
+    />
+    <SearchState
+      defaultValue=""
+    />
+    <IntegratedFiltering />
+    <PagingState
+      defaultCurrentPage={0}
+      defaultPageSize={10}
+      pageSize={5}
+    />
+    <IntegratedPaging />
+    <Table$$1
+      messages={Object {}}
+    />
+    <TableHeaderRow$$1
+      messages={Object {}}
+    />
+    <TableRowDetail$$1
+      contentComponent={[Function]}
+    />
+    <Toolbar$$1 />
+    <SearchPanel$$1
+      messages={Object {}}
+    />
+    <PagingPanel$$1
+      messages={Object {}}
+    />
+  </Grid$$1>
+</div>
 `;
 
 exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Rows rendered (honey badgers data w/ autonomous systems data) 1`] = `
-<Grid$$1
-  columns={
-    Array [
-      Object {
-        "name": "ipAddress",
-        "title": "IP Address",
-      },
-      Object {
-        "name": "count",
-        "title": "Times Seen Last 24 Hours",
-      },
-      Object {
-        "name": "country",
-        "title": "Country of Origin",
-      },
-      Object {
-        "name": "asn",
-        "title": "Autonomous System #",
-      },
-    ]
-  }
-  rows={
-    Array [
-      Object {
-        "asn": 16276,
-        "count": 987,
-        "country": "Loading",
-        "ipAddress": "1.1.1.1",
-      },
-    ]
-  }
->
-  <PagingState
-    defaultCurrentPage={0}
-    defaultPageSize={10}
-    pageSize={5}
-  />
-  <IntegratedPaging />
-  <Table$$1
-    messages={Object {}}
-  />
-  <TableHeaderRow$$1
-    messages={Object {}}
-  />
-  <PagingPanel$$1
-    messages={Object {}}
-  />
-</Grid$$1>
+<div>
+  <WithStyles(Typography)
+    paragraph={true}
+  >
+    Top honey badger activity in the last 24 hours. Click the
+     
+    <pure(KeyboardArrowRight) />
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+  </WithStyles(Typography)>
+  <Grid$$1
+    columns={
+      Array [
+        Object {
+          "name": "ipAddress",
+          "title": "IP Address",
+        },
+        Object {
+          "name": "count",
+          "title": "Times Seen Last 24 Hours",
+        },
+        Object {
+          "name": "country",
+          "title": "Country of Origin",
+        },
+        Object {
+          "name": "asn",
+          "title": "Autonomous System #",
+        },
+      ]
+    }
+    rows={
+      Array [
+        Object {
+          "asn": 16276,
+          "count": 987,
+          "country": "Loading",
+          "ipAddress": "1.1.1.1",
+        },
+      ]
+    }
+  >
+    <RowDetailState
+      defaultExpandedRowIds={Array []}
+    />
+    <SearchState
+      defaultValue=""
+    />
+    <IntegratedFiltering />
+    <PagingState
+      defaultCurrentPage={0}
+      defaultPageSize={10}
+      pageSize={5}
+    />
+    <IntegratedPaging />
+    <Table$$1
+      messages={Object {}}
+    />
+    <TableHeaderRow$$1
+      messages={Object {}}
+    />
+    <TableRowDetail$$1
+      contentComponent={[Function]}
+    />
+    <Toolbar$$1 />
+    <SearchPanel$$1
+      messages={Object {}}
+    />
+    <PagingPanel$$1
+      messages={Object {}}
+    />
+  </Grid$$1>
+</div>
 `;
 
 exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Rows rendered (honey badgers data w/o additional data) 1`] = `
-<Grid$$1
-  columns={
-    Array [
-      Object {
-        "name": "ipAddress",
-        "title": "IP Address",
-      },
-      Object {
-        "name": "count",
-        "title": "Times Seen Last 24 Hours",
-      },
-      Object {
-        "name": "country",
-        "title": "Country of Origin",
-      },
-      Object {
-        "name": "asn",
-        "title": "Autonomous System #",
-      },
-    ]
-  }
-  rows={
-    Array [
-      Object {
-        "asn": "Loading",
-        "count": 987,
-        "country": "Loading",
-        "ipAddress": "1.1.1.1",
-      },
-    ]
-  }
->
-  <PagingState
-    defaultCurrentPage={0}
-    defaultPageSize={10}
-    pageSize={5}
-  />
-  <IntegratedPaging />
-  <Table$$1
-    messages={Object {}}
-  />
-  <TableHeaderRow$$1
-    messages={Object {}}
-  />
-  <PagingPanel$$1
-    messages={Object {}}
-  />
-</Grid$$1>
+<div>
+  <WithStyles(Typography)
+    paragraph={true}
+  >
+    Top honey badger activity in the last 24 hours. Click the
+     
+    <pure(KeyboardArrowRight) />
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+  </WithStyles(Typography)>
+  <Grid$$1
+    columns={
+      Array [
+        Object {
+          "name": "ipAddress",
+          "title": "IP Address",
+        },
+        Object {
+          "name": "count",
+          "title": "Times Seen Last 24 Hours",
+        },
+        Object {
+          "name": "country",
+          "title": "Country of Origin",
+        },
+        Object {
+          "name": "asn",
+          "title": "Autonomous System #",
+        },
+      ]
+    }
+    rows={
+      Array [
+        Object {
+          "asn": "Loading",
+          "count": 987,
+          "country": "Loading",
+          "ipAddress": "1.1.1.1",
+        },
+      ]
+    }
+  >
+    <RowDetailState
+      defaultExpandedRowIds={Array []}
+    />
+    <SearchState
+      defaultValue=""
+    />
+    <IntegratedFiltering />
+    <PagingState
+      defaultCurrentPage={0}
+      defaultPageSize={10}
+      pageSize={5}
+    />
+    <IntegratedPaging />
+    <Table$$1
+      messages={Object {}}
+    />
+    <TableHeaderRow$$1
+      messages={Object {}}
+    />
+    <TableRowDetail$$1
+      contentComponent={[Function]}
+    />
+    <Toolbar$$1 />
+    <SearchPanel$$1
+      messages={Object {}}
+    />
+    <PagingPanel$$1
+      messages={Object {}}
+    />
+  </Grid$$1>
+</div>
 `;

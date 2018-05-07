@@ -1,14 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { PagingState, IntegratedPaging } from '@devexpress/dx-react-grid'
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import Typography from 'material-ui/Typography'
+
+import {
+  PagingState,
+  IntegratedPaging,
+  RowDetailState,
+  SearchState,
+  IntegratedFiltering,
+} from '@devexpress/dx-react-grid'
 
 import {
   Grid,
   Table,
   TableHeaderRow,
+  TableRowDetail,
   PagingPanel,
+  Toolbar,
+  SearchPanel,
 } from '@devexpress/dx-react-grid-material-ui'
+
+import HoneyBadgerDetails from './HoneyBadgerDetails'
 
 /**
  * Takes a list of honey badgers and their details and turns it into rows of details for use in the
@@ -44,31 +58,53 @@ const getHoneyBadgersRows = honeyBadgers =>
     return row
   })
 
-const HoneyBadgersTable = ({ honeyBadgers }) => (
-  <Grid
-    rows={getHoneyBadgersRows(honeyBadgers)}
-    columns={[
-      { name: 'ipAddress', title: 'IP Address' },
-      { name: 'count', title: 'Times Seen Last 24 Hours' },
-      { name: 'country', title: 'Country of Origin' },
-      { name: 'asn', title: 'Autonomous System #' },
-    ]}
-  >
-    <PagingState defaultCurrentPage={0} pageSize={5} />
-    <IntegratedPaging />
-    <Table />
-    <TableHeaderRow />
-    <PagingPanel />
-  </Grid>
-)
+const HoneyBadgersTable = ({ honeyBadgers }) => {
+  const renderHoneyBadgerDetails = ({ row: { ipAddress } }) => (
+    <HoneyBadgerDetails honeyBadger={honeyBadgers.get(ipAddress)} />
+  )
+
+  renderHoneyBadgerDetails.propTypes = {
+    row: PropTypes.shape({
+      ipAddress: PropTypes.string.isRequired,
+    }).isRequired,
+  }
+
+  return (
+    <div>
+      <Typography paragraph>
+        Top honey badger activity in the last 24 hours. Click the{' '}
+        <KeyboardArrowRightIcon /> to see a profile for a specific honey badger.
+        You can search/filter for specific honey badgers in the top right of the
+        data table. To learn more about the Honey Badger Insights app click the
+        about tab above.
+      </Typography>
+      <Grid
+        rows={getHoneyBadgersRows([...honeyBadgers.values()])}
+        columns={[
+          { name: 'ipAddress', title: 'IP Address' },
+          { name: 'count', title: 'Times Seen Last 24 Hours' },
+          { name: 'country', title: 'Country of Origin' },
+          { name: 'asn', title: 'Autonomous System #' },
+        ]}
+      >
+        <RowDetailState />
+        <SearchState />
+        <IntegratedFiltering />
+        <PagingState defaultCurrentPage={0} pageSize={5} />
+        <IntegratedPaging />
+        <Table />
+        <TableHeaderRow />
+        <TableRowDetail contentComponent={renderHoneyBadgerDetails} />
+        <Toolbar />
+        <SearchPanel />
+        <PagingPanel />
+      </Grid>
+    </div>
+  )
+}
 
 HoneyBadgersTable.propTypes = {
-  honeyBadgers: PropTypes.arrayOf(
-    PropTypes.shape({
-      ipAddress: PropTypes.string,
-      count: PropTypes.number,
-    }),
-  ).isRequired,
+  honeyBadgers: PropTypes.instanceOf(Map).isRequired,
 }
 
 export default HoneyBadgersTable
