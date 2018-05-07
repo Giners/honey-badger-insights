@@ -5,17 +5,65 @@ exports[`React component test: <App> Renders correctly for given application sta
 exports[`React component test: <App> Renders correctly for given application state: Error (state contains non-empty list of honey badgers) 1`] = `"The following error occurred: Bananas LOL"`;
 
 exports[`React component test: <App> Renders correctly for given application state: Honey badgers (state contains non-empty list of honey badgers) 1`] = `
-<HoneyBadgersTable
-  honeyBadgers={
-    Array [
-      Object {},
-    ]
-  }
-/>
+<div>
+  <WithStyles(Typography)
+    align="center"
+    variant="display3"
+  >
+    Honey Badger Insights
+  </WithStyles(Typography)>
+  <WithStyles(AppBar)
+    position="static"
+  >
+    <WithStyles(Tabs)
+      centered={true}
+      onChange={[Function]}
+      value={0}
+    >
+      <WithStyles(Tab)
+        label="Honey Badgers Data Table"
+      />
+      <WithStyles(Tab)
+        label="About Honey Badgers Insights"
+      />
+    </WithStyles(Tabs)>
+  </WithStyles(AppBar)>
+  <HoneyBadgersTable
+    honeyBadgers={
+      Array [
+        Object {},
+      ]
+    }
+  />
+</div>
 `;
 
 exports[`React component test: <App> Renders correctly for given application state: Initial props/state 1`] = `
-<HoneyBadgersTable
-  honeyBadgers={Array []}
-/>
+<div>
+  <WithStyles(Typography)
+    align="center"
+    variant="display3"
+  >
+    Honey Badger Insights
+  </WithStyles(Typography)>
+  <WithStyles(AppBar)
+    position="static"
+  >
+    <WithStyles(Tabs)
+      centered={true}
+      onChange={[Function]}
+      value={0}
+    >
+      <WithStyles(Tab)
+        label="Honey Badgers Data Table"
+      />
+      <WithStyles(Tab)
+        label="About Honey Badgers Insights"
+      />
+    </WithStyles(Tabs)>
+  </WithStyles(AppBar)>
+  <HoneyBadgersTable
+    honeyBadgers={Array []}
+  />
+</div>
 `;

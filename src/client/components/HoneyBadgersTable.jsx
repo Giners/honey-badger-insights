@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import Typography from 'material-ui/Typography'
+
 import {
   PagingState,
   IntegratedPaging,
@@ -67,27 +70,36 @@ const HoneyBadgersTable = ({ honeyBadgers }) => {
   }
 
   return (
-    <Grid
-      rows={getHoneyBadgersRows([...honeyBadgers.values()])}
-      columns={[
-        { name: 'ipAddress', title: 'IP Address' },
-        { name: 'count', title: 'Times Seen Last 24 Hours' },
-        { name: 'country', title: 'Country of Origin' },
-        { name: 'asn', title: 'Autonomous System #' },
-      ]}
-    >
-      <RowDetailState />
-      <SearchState />
-      <IntegratedFiltering />
-      <PagingState defaultCurrentPage={0} pageSize={5} />
-      <IntegratedPaging />
-      <Table />
-      <TableHeaderRow />
-      <TableRowDetail contentComponent={renderHoneyBadgerDetails} />
-      <Toolbar />
-      <SearchPanel />
-      <PagingPanel />
-    </Grid>
+    <div>
+      <Typography paragraph>
+        Top honey badger activity in the last 24 hours. Click the{' '}
+        <KeyboardArrowRightIcon /> to see a profile for a specific honey badger.
+        You can search/filter for specific honey badgers in the top right of the
+        data table. To learn more about the Honey Badger Insights app click the
+        about tab above.
+      </Typography>
+      <Grid
+        rows={getHoneyBadgersRows([...honeyBadgers.values()])}
+        columns={[
+          { name: 'ipAddress', title: 'IP Address' },
+          { name: 'count', title: 'Times Seen Last 24 Hours' },
+          { name: 'country', title: 'Country of Origin' },
+          { name: 'asn', title: 'Autonomous System #' },
+        ]}
+      >
+        <RowDetailState />
+        <SearchState />
+        <IntegratedFiltering />
+        <PagingState defaultCurrentPage={0} pageSize={5} />
+        <IntegratedPaging />
+        <Table />
+        <TableHeaderRow />
+        <TableRowDetail contentComponent={renderHoneyBadgerDetails} />
+        <Toolbar />
+        <SearchPanel />
+        <PagingPanel />
+      </Grid>
+    </div>
   )
 }
 

@@ -4,8 +4,12 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import React from 'react'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import Typography from 'material-ui/Typography'
 
 import HoneyBadgersTable from './../components/HoneyBadgersTable'
+import About from './../components/About'
 import {
   autonomousSystemsQuery,
   geoLocationsQuery,
@@ -23,7 +27,11 @@ const apolloClient = new ApolloClient({
 })
 
 /** The initial state of the App component when it is mounted. Exported for testing purposes. */
-export const initialState = { honeyBadgers: new Map(), error: null }
+export const initialState = {
+  honeyBadgers: new Map(),
+  currentTab: 0,
+  error: null,
+}
 
 /**
  * The <App> component is a stateful React component that is responsible for providing the "root"
@@ -128,6 +136,8 @@ class App extends React.Component {
     super()
 
     this.state = initialState
+
+    this.onTabChange = this.onTabChange.bind(this)
   }
 
   /**
@@ -162,14 +172,32 @@ class App extends React.Component {
     }
   }
 
+  onTabChange(event, value) {
+    this.setState({ currentTab: value })
+  }
+
   render() {
-    const { honeyBadgers, error } = this.state
+    const { honeyBadgers, currentTab, error } = this.state
 
     if (error) {
       return `The following error occurred: ${error}`
     }
 
-    return <HoneyBadgersTable honeyBadgers={honeyBadgers} />
+    return (
+      <div>
+        <Typography align="center" variant="display3">
+          Honey Badger Insights
+        </Typography>
+        <AppBar position="static">
+          <Tabs centered value={currentTab} onChange={this.onTabChange}>
+            <Tab label="Honey Badgers Data Table" />
+            <Tab label="About Honey Badgers Insights" />
+          </Tabs>
+        </AppBar>
+        {currentTab === 0 && <HoneyBadgersTable honeyBadgers={honeyBadgers} />}
+        {currentTab === 1 && <About />}
+      </div>
+    )
   }
 }
 
