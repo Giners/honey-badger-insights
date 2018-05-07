@@ -12,6 +12,7 @@ import HoneyBadgersTable from './../components/HoneyBadgersTable'
 import About from './../components/About'
 import {
   autonomousSystemsQuery,
+  blacklistsQuery,
   geoLocationsQuery,
   topHoneyBadgersQuery,
 } from './../graphql/queries'
@@ -129,6 +130,42 @@ class App extends React.Component {
   }
 
   /**
+   * Helper method that given a map of honey badgers where they are keyed off of their IP address
+   * will make a query to the GraphQL service/API endpoint for said honey badger for info about
+   * any blacklists they belong to.
+   *
+   * Note that this function isn't pure and has side effects in that it modifies the map of honey
+   * badgers passed into it to add in the info about the locations that has been collected.
+   *
+   * @param {Map<string, HoneyBadger>} honeyBadgers - Map of honey badgers where they are keyed off
+   * of their IP address
+   *
+   * @return {Promise<undefined, error>} Returns a promise where it will resolve if able to
+   * successfully query for info about the blacklists info as well as add the info to the map of
+   * honey badgers that is passed into it. Should we fail to query the GraphQL service/API endpoint
+   * or for any other reason this promise will be rejected with the error.
+   */
+  static async collectBlacklistsInfo(honeyBadgers) {
+    const ipAddresses = [...honeyBadgers.keys()]
+
+    const { blacklists } = (await apolloClient.query({
+      query: blacklistsQuery,
+      variables: { ipAddresses },
+    })).data
+
+    // Join the data about the blacklist info of the honey badger with the existing data about honey
+    // badgers
+    blacklists.forEach(({ ipAddress, ...rest }) => {
+      const honeyBadger = honeyBadgers.get(ipAddress)
+
+      honeyBadgers.set(ipAddress, {
+        ...honeyBadger,
+        blacklists: rest.blacklists,
+      })
+    })
+  }
+
+  /**
    * Creates a new stateful React component that is responsible for providing the "root" for the
    * visual and logical React components that make up the app.
    */
@@ -160,10 +197,14 @@ class App extends React.Component {
       // and enqueue a request to set the state of the app with the new info we collected:
       // * The autonomous systems that oversee the IP address of the honey badger
       // * The geospatial location of a honey badgers IP address
+      // * The blacklist info for a honey badgers IP address
       await App.collectAutonomousSystemsInfo(honeyBadgers)
       this.setState({ honeyBadgers })
 
       await App.collectGeoLocationsInfo(honeyBadgers)
+      this.setState({ honeyBadgers })
+
+      await App.collectBlacklistsInfo(honeyBadgers)
       this.setState({ honeyBadgers })
     } catch (error) {
       // It is okay to call 'setState()' in 'componentDidMount()' as discussed in the React docs

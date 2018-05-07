@@ -81,8 +81,8 @@ describe('React component test: <HoneyBadgersTable>', function() {
 
       // This assertion is meant to remind us to update the following assertions. It will fail as
       // we add additional keys to the row data and don't update the tests. We currently expect
-      // the following keys: 'ipAddress', 'count', 'country', 'asn'
-      expect(Object.keys(row).length).to.equal(4)
+      // the following keys: 'ipAddress', 'count', 'country', 'asn', 'blacklisted'
+      expect(Object.keys(row).length).to.equal(5)
 
       // Now check for the data we expect...
       expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
@@ -92,6 +92,7 @@ describe('React component test: <HoneyBadgersTable>', function() {
       // from other data we would display to say 'Loading' at this point
       expect(row.country).to.equal('Loading')
       expect(row.asn).to.equal('Loading')
+      expect(row.blacklisted).to.equal('Loading')
 
       expect(toJson(hbtWrapper)).to.matchSnapshot()
     })
@@ -124,8 +125,8 @@ describe('React component test: <HoneyBadgersTable>', function() {
 
       // This assertion is meant to remind us to update the following assertions. It will fail as
       // we add additional keys to the row data and don't update the tests. We currently expect
-      // the following keys: 'ipAddress', 'count', 'country, 'asn'
-      expect(Object.keys(row).length).to.equal(4)
+      // the following keys: 'ipAddress', 'count', 'country, 'asn', 'blacklisted'
+      expect(Object.keys(row).length).to.equal(5)
 
       // Now check for the data we expect...
       expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
@@ -135,6 +136,7 @@ describe('React component test: <HoneyBadgersTable>', function() {
       // This test presumes we haven't yet queried for geospatial locations data so we expect any
       // info we would display about that data to say 'Loading' at this point
       expect(row.country).to.equal('Loading')
+      expect(row.blacklisted).to.equal('Loading')
 
       expect(toJson(hbtWrapper)).to.matchSnapshot()
     })
@@ -173,14 +175,66 @@ describe('React component test: <HoneyBadgersTable>', function() {
 
       // This assertion is meant to remind us to update the following assertions. It will fail as
       // we add additional keys to the row data and don't update the tests. We currently expect
-      // the following keys: 'ipAddress', 'count', 'country', 'asn'
-      expect(Object.keys(row).length).to.equal(4)
+      // the following keys: 'ipAddress', 'count', 'country', 'asn', 'blacklisted'
+      expect(Object.keys(row).length).to.equal(5)
 
       // Now check the data we expect...
       expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
       expect(parseInt(row.count, 10)).to.equal(honeyBadger.count)
       expect(parseInt(row.asn, 10)).to.equal(honeyBadger.as.asn)
       expect(row.country).to.equal(honeyBadger.geoLocation.country)
+
+      // This test presumes we haven't yet queried for geospatial locations data so we expect any
+      // info we would display about that data to say 'Loading' at this point
+      expect(row.blacklisted).to.equal('Loading')
+
+      expect(toJson(hbtWrapper)).to.matchSnapshot()
+    })
+
+    it('Rows rendered (honey badgers data w/ AS, location, and blacklists data)', function() {
+      // Create data as if we have issued the 'topHoneyBadgers', 'autonomousSystems', and
+      // 'geoLocations' queries to our GraphQL service/API endpoint
+      const honeyBadgers = [
+        {
+          ipAddress: '1.1.1.1',
+          count: 987,
+          geoLocation: {
+            latitude: 47.6062,
+            longitude: 122.3321,
+            country: 'United State',
+            continent: 'North America',
+          },
+          as: {
+            name: 'OVH SAS',
+            asn: 16276,
+            countryCode: 'FR',
+          },
+          blacklists: ['FAIL2BNA-SIP', 'UCEPROTECT-LEVEL1'],
+        },
+      ]
+
+      hbtWrapper.setProps({ honeyBadgers })
+
+      // We should have some rows since we have some honey badgers. Check and ensure that each row
+      // specifies it is loading data where appropriate
+      const rows = hbtWrapper.find(Grid).prop('rows')
+      expect(rows.length).to.equal(honeyBadgers.length)
+
+      // Verify that we correctly set the data in a row given a honey badger
+      const honeyBadger = honeyBadgers[0]
+      const row = rows[0]
+
+      // This assertion is meant to remind us to update the following assertions. It will fail as
+      // we add additional keys to the row data and don't update the tests. We currently expect
+      // the following keys: 'ipAddress', 'count', 'country', 'asn', 'blacklisted'
+      expect(Object.keys(row).length).to.equal(5)
+
+      // Now check the data we expect...
+      expect(row.ipAddress).to.equal(honeyBadger.ipAddress)
+      expect(parseInt(row.count, 10)).to.equal(honeyBadger.count)
+      expect(parseInt(row.asn, 10)).to.equal(honeyBadger.as.asn)
+      expect(row.country).to.equal(honeyBadger.geoLocation.country)
+      expect(row.blacklisted).to.equal('BLACKLISTED')
 
       expect(toJson(hbtWrapper)).to.matchSnapshot()
     })

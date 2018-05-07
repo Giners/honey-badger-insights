@@ -164,4 +164,23 @@ describe('React component test: <App>', function() {
       })
     })
   })
+
+  describe('collectBlacklistsInfo():', function() {
+    it('Promise resolves to map with blacklists info injected', async function() {
+      // First query for honey badgers so we can pass them to the
+      // 'App.collectBlacklistsInfo()' method...
+      let honeyBadgers = await App.collectTopHoneyBadgersInfo()
+
+      // Now query for blacklists info and check that the map of honey badgers has been updated
+      // inline with the invocation of the 'App.collectBlacklistsInfo()' method...
+      await App.collectBlacklistsInfo(honeyBadgers)
+
+      // Check that we correctly populated our entries on our map...
+      honeyBadgers = [...honeyBadgers.values()]
+      honeyBadgers.forEach(honeyBadger => {
+        expect(honeyBadger).to.be.an('object')
+        expect(honeyBadger.blacklists).to.be.an('array')
+      })
+    })
+  })
 })

@@ -28,7 +28,7 @@ import schema from './../../../../src/server/graphql/schema'
 describe('Schema query tests:', function() {
   // How many queries we expect in our schema. This is used to simply ensure that we update these
   // tests after adding/removing a query from our schema.
-  const expectedSchemaQueries = 3
+  const expectedSchemaQueries = 4
 
   // This test is simply to help us remembr to test all of our queries. It will fail once you
   // have added a new field to the root query. After adding a test for the root query please
@@ -257,6 +257,78 @@ describe('Schema query tests:', function() {
       } = result
 
       expect(geoLocations.length).to.equal(topHoneyBadgers.length)
+    })
+  })
+
+  describe('Query: blacklists', function() {
+    // Query that can be used to get the list of top honey badgers. Meant to get IP addresses so
+    // they can be supplied to the arguments for the 'blacklists' query.
+    const topHBQuery = `
+      {
+        topHoneyBadgers {
+          ipAddress
+        }
+      }
+    `
+
+    // Query that can be used to get the blacklist info associated with the IP address of a honey
+    // badger.
+    const blacklistsQuery = `
+      query Blacklists($ipAddresses: [String!]!) {
+        blacklists(ipAddresses: $ipAddresses) {
+          ipAddress
+          blacklists
+        }
+      }
+    `
+
+    // Helper method to perform common basic validation on the 'blacklists' query. Ought to be
+    // invoked before more specific validation is done on the 'blacklists' query.
+    const validateBlacklistsQuery = result => {
+      expect(
+        result.errors,
+        `Didn't expect any errors but got: ${result.errors}`,
+      ).to.be.undefined
+      expect(result.data).to.exist
+      expect(result.data.blacklists).to.exist
+    }
+
+    it('Query can successfully be executed', async function() {
+      // Increase the timeout in our unit test as our schema makes async calls to HoneyDB and
+      // Apility
+      this.timeout(25000)
+
+      const {
+        data: { topHoneyBadgers },
+      } = await graphql(schema, topHBQuery)
+
+      const result = await graphql(schema, blacklistsQuery, null, null, {
+        ipAddresses: topHoneyBadgers.map(({ ipAddress }) => ipAddress),
+      })
+
+      validateBlacklistsQuery(result)
+    })
+
+    it('Query returns the correct amount of results', async function() {
+      // Increase the timeout in our unit test as our schema makes async calls to HoneyDB and
+      // Apility
+      this.timeout(25000)
+
+      const {
+        data: { topHoneyBadgers },
+      } = await graphql(schema, topHBQuery)
+
+      const result = await graphql(schema, blacklistsQuery, null, null, {
+        ipAddresses: topHoneyBadgers.map(({ ipAddress }) => ipAddress),
+      })
+
+      validateBlacklistsQuery(result)
+
+      const {
+        data: { blacklists },
+      } = result
+
+      expect(blacklists.length).to.equal(topHoneyBadgers.length)
     })
   })
 })
