@@ -2,6 +2,74 @@
 
 [![Build Status](https://travis-ci.org/Giners/honey-badger-insights.svg?branch=master)](https://travis-ci.org/Giners/honey-badger-insights)
 
+# About
+
+Honey Badger Insights is a little app that helps visualize some security intelligence data feeds (vulnerabilities or threat intelligence data). Specificially the app focuses on data concerning honeypot activity.
+
+A honeypot is a security mechanism that is set to detect unauthorized access of a resource/part of a system. Honeypots consist of data that appears to be valuable and a legitimate part of the system when in fact the honeypot is actually isolated from the system. The honeypots are monitored for those trying to access the system. Once someone has been identified as accessing the system they are marked as an attacker as there is no reason they ought to be accessing the honeypot unless it was for illicit purposes. Once marked as an attacker the system can isolate/block the attacker from gaining further access to the real parts of the system.
+
+The name of the app stems from the fact that the honey badger animal loves honey and will go out of its way to obtain it. In fact the honey badger loves honey so much that it will try to gain access to honey even when it knows it should not by attacking bee hives whilst bees are present (and obviously while getting stung from the bees defending the bee hive!). In our case the attackers of a honeypot security mechanism are known as honey badgers since they love accessing resource/parts of a system they know they shouldn't.
+
+The app leverages the [HoneyDB](https://riskdiscovery.com/honeydb/#about) security intelligence data feed to provide a list of the top 25 honey badgers seen in the last 24 hours. It then tries to build a profile of the honey badger by aggregating further details about the honey badger from the [Apility](https://apility.io/) security intelligence data feeds.
+
+I'm very motivated by the ability to learn and solve new problems. I started this project as it would provide me an opportunity to learn by being hands-on in the security field which I am not well versed in and have a desire to learn more about. It also allowed me to further my full-stack development skills as it is something that I am teaching myself. I'm very interested in taking feedback in regards to security, full-stack development, or anything in general so that I can grow. You can open an issue/message me and leave your feedback.
+
+Thanks for visiting! :smiley:
+
+# Install
+
+You can issue the following commands to install the app:
+
+(With NPM)
+
+```shell
+$ git clone https://github.com/Giners/honey-badger-insights.git
+$ cd honey-badger-insights
+$ npm install
+```
+
+(With Yarn)
+
+```shell
+$ git clone https://github.com/Giners/honey-badger-insights.git
+$ cd honey-badger-insights
+$ yarn install
+```
+
+# Quickstart
+
+To get started with the app quickly so you can run it/play with it/hack it to your hearts content issue the following command in one terminal:
+
+(With NPM)
+
+```shell
+$ RETURN_MOCK_DATA=true npm run start:dev:svr
+```
+
+(With Yarn)
+
+```shell
+$ RETURN_MOCK_DATA=true yarn start:dev:svr
+```
+
+In another terminal issue the following command:
+
+(With NPM)
+
+```shell
+$ npm run start:dev:cli
+```
+
+(With Yarn)
+
+```shell
+$ yarn start:dev:cli
+```
+
+This will start the server with a GraphQL service/API endpoint that will return mock data. The app can then be accessed from `http://localhost:8080` in your browser. The use of mock data allows the app to display information about honey badgers as if it were realtime data without the need to sign up and configure the 3rd-party services that the GraphQL service/API endpoint interfaces with.
+
+If you would like to use realtime data (i.e. not mocked data) see the below `Setup` section about how to sign up and configure the 3rd-party services that the GraphQL service/API endpoint interfaces with. After doing so you can issue the same command to start the server but without the `RETURN_MOCK_DATA` environment variable set.
+
 # Setup
 
 The app leverages several sources of data to provide the insights into honeypot intrusions. Some of the data sources require authentication/authorization to use. What follows are instructions for setting up your environment to make use of the data sources.
