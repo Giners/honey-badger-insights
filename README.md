@@ -16,6 +16,60 @@ I'm very motivated by the ability to learn and solve new problems. I started thi
 
 Thanks for visiting! :smiley:
 
+# Install
+
+You can issue the following commands to install the app:
+
+(With NPM)
+
+```shell
+$ git clone https://github.com/Giners/honey-badger-insights.git
+$ cd honey-badger-insights
+$ npm install
+```
+
+(With Yarn)
+
+```shell
+$ git clone https://github.com/Giners/honey-badger-insights.git
+$ cd honey-badger-insights
+$ yarn install
+```
+
+# Quickstart
+
+To get started with the app quickly so you can run it/play with it/hack it to your hearts content issue the following command in one terminal:
+
+(With NPM)
+
+```shell
+$ RETURN_MOCK_DATA=true npm run start:dev:svr
+```
+
+(With Yarn)
+
+```shell
+$ RETURN_MOCK_DATA=true yarn start:dev:svr
+```
+
+In another terminal issue the following command:
+
+(With NPM)
+
+```shell
+$ npm run start:dev:cli
+```
+
+(With Yarn)
+
+```shell
+$ yarn start:dev:cli
+```
+
+This will start the server with a GraphQL service/API endpoint that will return mock data. The app can then be accessed from `http://localhost:8080` in your browser. The use of mock data allows the app to display information about honey badgers as if it was realtime without the need to sign up and configure the services that the GraphQL service/API endpoint interfaces with.
+
+If you would like to use realtime data that isn't mocked up see the below `Setup` section about how to sign up and configure the services that the GraphQL service/API endpoint interfaces with. After doing so you can issue the same command to start the server but without the `RETURN_MOCK_DATA` environment variable set.
+
 # Setup
 
 The app leverages several sources of data to provide the insights into honeypot intrusions. Some of the data sources require authentication/authorization to use. What follows are instructions for setting up your environment to make use of the data sources.
