@@ -18,7 +18,12 @@ import {
   GraphQLSchema,
 } from 'graphql'
 
-import { ASType, GeoLocationType, TopHoneyBadgerType } from './types'
+import {
+  ASType,
+  BlacklistType,
+  GeoLocationType,
+  TopHoneyBadgerType,
+} from './types'
 
 import config from './../config'
 
@@ -41,6 +46,16 @@ const apilityASBatchAPIURL = 'https://api.apility.net/as_batch/ip'
  * set of IPs as a list that is comma separated.
  */
 const apilityGeoIPBatchAPIURL = 'https://api.apility.net/geoip_batch'
+
+/**
+ * The URL for the Apility API that returns blacklist info for a set of IPs. The API expects the
+ * set of IPs as a list of comma separated IPs used as the last URI segment of this URL (i.e. you
+ * need to add them).
+ *
+ * Note that the URL doesn't contain an ending '/' character. You need to add it before adding the
+ * set of IPs as a list that is comma separated.
+ */
+const apilityBlacklistIPBatchAPIURL = 'https://api.apility.net/badip_batch'
 
 /**
  * Apility auth header for accessing its APIs that identifies who is accessing the API based on a
@@ -75,6 +90,20 @@ const getApilityASBatchAPIURL = ipAddresses =>
  */
 const getApilityGeoIPBatchAPIURL = ipAddresses =>
   `${apilityGeoIPBatchAPIURL}/${ipAddresses.join(',')}`
+
+/**
+ * Helper method to construct the URL used to query for the blacklist info associated with a set of
+ * IPs from Apility.
+ *
+ * @param {string[]} ipAddresses - Array of IP addresses to query for the blacklist info associated
+ * with them. No checking/validation is done of this parameter so if anything but an array of
+ * strings is passed will cause this function to break.
+ *
+ * @returns {string} - Formed URL that can be used to query for the blacklist info associated with
+ * a set of IPs from Apility
+ */
+const getApilityBlacklistIPBatchAPIURL = ipAddresses =>
+  `${apilityBlacklistIPBatchAPIURL}/${ipAddresses.join(',')}`
 
 /** The URL for the HoneyDB API that returns a list of bad hosts from the last 24 hours */
 const honeyDBBadHostsAPIURL = 'https://riskdiscovery.com/honeydb/api/bad-hosts'
@@ -256,6 +285,54 @@ const rootQueryType = new GraphQLObjectType({
       },
       description:
         'Gets the geospatial locations associated with the IP addresses of honey badgers',
+    },
+    blacklists: {
+      type: new GraphQLNonNull(
+        new GraphQLList(new GraphQLNonNull(BlacklistType)),
+      ),
+      args: {
+        ipAddresses: {
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(GraphQLString)),
+          ),
+          description:
+            'A list of honey badger IPs used to look up their associated blacklist info',
+        },
+      },
+      resolve(parentNode, { ipAddresses }) {
+        // Return mock data from disk if signalled to do so
+        if (returnMockData) {
+          return promisify(readFile)(
+            resolve(__dirname, './data/blacklistsData'),
+          ).then(data => JSON.parse(data))
+        }
+
+        // If we aren't returning mock data from disk then query the Apility service
+        const { token } = config.serviceCreds.apility
+        const url = getApilityBlacklistIPBatchAPIURL(ipAddresses)
+
+        return fetch(url, {
+          headers: {
+            [apilityAPIAuthTokenHeader]: token,
+          },
+        })
+          .then(res => res.json())
+          .then(json =>
+            json.response.map(entry => {
+              // Iterate over the entries in the response from Apility in regards to getting
+              // blacklist details and form it into the data representation that is defined by the
+              // GraphQL type that we return
+              const { ip, blacklists } = entry
+
+              return {
+                ipAddress: ip,
+                blacklists,
+              }
+            }),
+          )
+      },
+      description:
+        'Gets the blacklist info associated with the IP addresses of honey badgers',
     },
   },
   description: 'The GraphQL queries available in the app',

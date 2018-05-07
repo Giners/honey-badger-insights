@@ -1,0 +1,116 @@
+[
+  {
+    "ipAddress": "104.17.41.113",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "136.243.74.134",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "104.17.38.113",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "147.135.169.235",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "90.231.42.220",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "174.60.100.187",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "195.140.215.9",
+    "blacklists": [
+      "FAIL2BAN-SIP",
+      "UCEPROTECT-LEVEL1"
+    ]
+  },
+  {
+    "ipAddress": "81.218.45.146",
+    "blacklists": [
+      "FAIL2BAN-SSH"
+    ]
+  },
+  {
+    "ipAddress": "147.135.169.234",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "142.196.229.24",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "5.62.63.221",
+    "blacklists": [
+      "STOPFORUMSPAM-365"
+    ]
+  },
+  {
+    "ipAddress": "95.216.147.231",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "95.68.221.51",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "98.212.111.60",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "75.176.109.242",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "182.100.67.129",
+    "blacklists": [
+      "FAIL2BAN-SSH",
+      "FAIL2BAN-STRONGIPS"
+    ]
+  },
+  {
+    "ipAddress": "104.17.37.113",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "46.29.248.90",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "104.17.39.113",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "54.37.104.81",
+    "blacklists": [
+      "ALIENVAULT-REPUTATION"
+    ]
+  },
+  {
+    "ipAddress": "91.236.239.102",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "75.176.121.42",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "212.129.56.125",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "104.17.40.113",
+    "blacklists": []
+  },
+  {
+    "ipAddress": "66.70.173.21",
+    "blacklists": [
+      "ALIENVAULT-REPUTATION"
+    ]
+  }
+]

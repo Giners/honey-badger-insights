@@ -31,3 +31,12 @@ export const geoLocationsQuery = gql`
     }
   }
 `
+
+export const blacklistsQuery = gql`
+  query Blacklists($ipAddresses: [String!]!) {
+    blacklists(ipAddresses: $ipAddresses) {
+      ipAddress
+      blacklists
+    }
+  }
+`

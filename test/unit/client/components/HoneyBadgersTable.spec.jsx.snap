@@ -8,7 +8,7 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Top honey badger activity in the last 24 hours. Click the
      
     <pure(KeyboardArrowRight) />
-     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. Note that it may take a while for the data to load where you will see a 'No Data' message. To learn more about the Honey Badger Insights app click the about tab above.
   </WithStyles(Typography)>
   <Grid$$1
     columns={
@@ -28,6 +28,10 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
         Object {
           "name": "asn",
           "title": "Autonomous System #",
+        },
+        Object {
+          "name": "blacklisted",
+          "title": "Blacklisted",
         },
       ]
     }
@@ -74,7 +78,7 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Top honey badger activity in the last 24 hours. Click the
      
     <pure(KeyboardArrowRight) />
-     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. Note that it may take a while for the data to load where you will see a 'No Data' message. To learn more about the Honey Badger Insights app click the about tab above.
   </WithStyles(Typography)>
   <Grid$$1
     columns={
@@ -95,12 +99,97 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
           "name": "asn",
           "title": "Autonomous System #",
         },
+        Object {
+          "name": "blacklisted",
+          "title": "Blacklisted",
+        },
       ]
     }
     rows={
       Array [
         Object {
           "asn": 16276,
+          "blacklisted": "Loading",
+          "count": 987,
+          "country": "United State",
+          "ipAddress": "1.1.1.1",
+        },
+      ]
+    }
+  >
+    <RowDetailState
+      defaultExpandedRowIds={Array []}
+    />
+    <SearchState
+      defaultValue=""
+    />
+    <IntegratedFiltering />
+    <PagingState
+      defaultCurrentPage={0}
+      defaultPageSize={10}
+      pageSize={5}
+    />
+    <IntegratedPaging />
+    <Table$$1
+      messages={Object {}}
+    />
+    <TableHeaderRow$$1
+      messages={Object {}}
+    />
+    <TableRowDetail$$1
+      contentComponent={[Function]}
+    />
+    <Toolbar$$1 />
+    <SearchPanel$$1
+      messages={Object {}}
+    />
+    <PagingPanel$$1
+      messages={Object {}}
+    />
+  </Grid$$1>
+</div>
+`;
+
+exports[`React component test: <HoneyBadgersTable> Renders correctly for given application state: Rows rendered (honey badgers data w/ AS, location, and blacklists data) 1`] = `
+<div>
+  <WithStyles(Typography)
+    paragraph={true}
+  >
+    Top honey badger activity in the last 24 hours. Click the
+     
+    <pure(KeyboardArrowRight) />
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. Note that it may take a while for the data to load where you will see a 'No Data' message. To learn more about the Honey Badger Insights app click the about tab above.
+  </WithStyles(Typography)>
+  <Grid$$1
+    columns={
+      Array [
+        Object {
+          "name": "ipAddress",
+          "title": "IP Address",
+        },
+        Object {
+          "name": "count",
+          "title": "Times Seen Last 24 Hours",
+        },
+        Object {
+          "name": "country",
+          "title": "Country of Origin",
+        },
+        Object {
+          "name": "asn",
+          "title": "Autonomous System #",
+        },
+        Object {
+          "name": "blacklisted",
+          "title": "Blacklisted",
+        },
+      ]
+    }
+    rows={
+      Array [
+        Object {
+          "asn": 16276,
+          "blacklisted": "BLACKLISTED",
           "count": 987,
           "country": "United State",
           "ipAddress": "1.1.1.1",
@@ -149,7 +238,7 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Top honey badger activity in the last 24 hours. Click the
      
     <pure(KeyboardArrowRight) />
-     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. Note that it may take a while for the data to load where you will see a 'No Data' message. To learn more about the Honey Badger Insights app click the about tab above.
   </WithStyles(Typography)>
   <Grid$$1
     columns={
@@ -170,12 +259,17 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
           "name": "asn",
           "title": "Autonomous System #",
         },
+        Object {
+          "name": "blacklisted",
+          "title": "Blacklisted",
+        },
       ]
     }
     rows={
       Array [
         Object {
           "asn": 16276,
+          "blacklisted": "Loading",
           "count": 987,
           "country": "Loading",
           "ipAddress": "1.1.1.1",
@@ -224,7 +318,7 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
     Top honey badger activity in the last 24 hours. Click the
      
     <pure(KeyboardArrowRight) />
-     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. To learn more about the Honey Badger Insights app click the about tab above.
+     to see a profile for a specific honey badger. You can search/filter for specific honey badgers in the top right of the data table. Note that it may take a while for the data to load where you will see a 'No Data' message. To learn more about the Honey Badger Insights app click the about tab above.
   </WithStyles(Typography)>
   <Grid$$1
     columns={
@@ -245,12 +339,17 @@ exports[`React component test: <HoneyBadgersTable> Renders correctly for given a
           "name": "asn",
           "title": "Autonomous System #",
         },
+        Object {
+          "name": "blacklisted",
+          "title": "Blacklisted",
+        },
       ]
     }
     rows={
       Array [
         Object {
           "asn": "Loading",
+          "blacklisted": "Loading",
           "count": 987,
           "country": "Loading",
           "ipAddress": "1.1.1.1",

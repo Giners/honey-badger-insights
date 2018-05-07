@@ -2,6 +2,7 @@ import {
   GraphQLFloat,
   GraphQLInt,
   GraphQLNonNull,
+  GraphQLList,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql'
@@ -57,6 +58,23 @@ export const ASType = new GraphQLObjectType({
     },
   },
   description: 'Information regarding an autonomous system',
+})
+
+export const BlacklistType = new GraphQLObjectType({
+  name: 'Blacklist',
+  fields: {
+    ipAddress: {
+      type: new GraphQLNonNull(GraphQLString),
+      description:
+        'The IP address of a honey badger that the blacklist information pertains to',
+    },
+    blacklists: {
+      type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
+      description:
+        'The names of the blacklists that a honey badger belongs to, if any',
+    },
+  },
+  description: 'Blacklist information for a honey badger',
 })
 
 export const TopHoneyBadgerType = new GraphQLObjectType({
