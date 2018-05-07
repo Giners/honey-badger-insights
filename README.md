@@ -66,9 +66,9 @@ $ npm run start:dev:cli
 $ yarn start:dev:cli
 ```
 
-This will start the server with a GraphQL service/API endpoint that will return mock data. The app can then be accessed from `http://localhost:8080` in your browser. The use of mock data allows the app to display information about honey badgers as if it was realtime without the need to sign up and configure the services that the GraphQL service/API endpoint interfaces with.
+This will start the server with a GraphQL service/API endpoint that will return mock data. The app can then be accessed from `http://localhost:8080` in your browser. The use of mock data allows the app to display information about honey badgers as if it were realtime data without the need to sign up and configure the 3rd-party services that the GraphQL service/API endpoint interfaces with.
 
-If you would like to use realtime data that isn't mocked up see the below `Setup` section about how to sign up and configure the services that the GraphQL service/API endpoint interfaces with. After doing so you can issue the same command to start the server but without the `RETURN_MOCK_DATA` environment variable set.
+If you would like to use realtime data (i.e. not mocked data) see the below `Setup` section about how to sign up and configure the 3rd-party services that the GraphQL service/API endpoint interfaces with. After doing so you can issue the same command to start the server but without the `RETURN_MOCK_DATA` environment variable set.
 
 # Setup
 
